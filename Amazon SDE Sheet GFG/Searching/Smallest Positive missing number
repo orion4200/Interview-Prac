@@ -1,0 +1,22 @@
+class Solution
+{
+    public:
+    //Function to find the smallest positive number missing from the array.
+    int missingNumber(int arr[], int n) 
+    { 
+        sort(arr, arr+n) ;
+        
+        int i=0, ans=1;
+        
+        while(arr[i] <= 0) i++ ;
+        
+        while(i < n)
+        {
+            if(arr[i] == ans)
+                ans++ ;
+            i++ ;
+        }
+        
+        return ans ;
+    } 
+};
