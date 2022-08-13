@@ -1,0 +1,24 @@
+vector<int> find(int arr[], int n , int x )
+{
+    int start=-1, end=-1 ;
+    for(int i=0; i<n; i++)
+    {
+        if(arr[i] == x)
+        {
+            if(start < 0)
+                start = i ;
+                
+            while(arr[i] == x)
+                i++ ;
+            
+            end = i-1 ;
+        }
+    }
+    
+    vector<int> v ;
+    
+    v.push_back(start);
+    v.push_back(end);
+    
+    return v ;
+}
