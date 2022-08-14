@@ -1,0 +1,40 @@
+class Solution{
+    public:
+    double MedianOfArrays(vector<int>& array1, vector<int>& array2)
+    {
+        int n1 = array1.size(), n2 = array2.size(),n3;
+        
+        float ans ;
+        vector<double> v3(n1+n2) ;
+        
+        int i=0,k=0,j=0 ;
+        while(i<n1 && j<n2)
+        {
+            if(array1[i] > array2[j])
+                v3[k++] = array2[j++];
+            else 
+                v3[k++] = array1[i++];
+        }
+        
+        for(; i<n1; )
+            v3[k++] = array1[i++];
+            
+        for(; j<n2; )
+            v3[k++] = array2[j++];
+            
+        
+        if((n1+n2)%2 == 0)
+        {
+            n3 = (n1+n2)/2 ;
+            ans = (v3[n3]+v3[n3-1])/2 ;
+        }
+        else
+        {
+            n3 = (n1 + n2 - 1)/2 ;
+            ans = v3[n3];
+        }
+        
+        return ans ;
+    
+    }
+};
