@@ -1,0 +1,39 @@
+class Solution{
+public:
+    Node* divide(int N, Node *head){
+        
+        if(head == NULL || head->next == NULL)
+            return head ;
+            
+        Node *p = head ;
+        Node *ev = new Node(-1) ;
+        Node *od = new Node(-1) ;
+        
+        Node *evptr = ev, *odptr = od ;
+        
+        while(p != NULL)
+        {
+            if((p->data)%2 == 0)
+            {
+                evptr->next = p ;
+                evptr = p ;
+            }
+            else
+            {
+                odptr->next = p ;
+                odptr = p ;
+            }
+            p = p->next ;
+        }
+        
+        if(ev->next != NULL)
+        {
+            odptr->next = NULL;
+            evptr->next = od->next ;
+            
+            return ev->next ;
+        }
+        
+        return od->next ;
+    }
+};
