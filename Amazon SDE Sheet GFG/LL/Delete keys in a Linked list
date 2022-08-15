@@ -1,0 +1,38 @@
+
+Node* deleteAllOccurances(Node *head,int x)
+{
+    Node *p = head, *q=NULL ;
+    
+    if(head == NULL)
+        return head ;
+    
+    while(p != NULL)
+    {
+        if(p->data == x)
+        {
+            
+            if(head->next == NULL)
+                return NULL;
+            else if(p == head)
+            {
+                head = head->next ;
+                p = head ;
+                continue ;
+            }
+            else
+            {
+                q->next = p->next ;
+                Node *t = p ;
+                p = p->next ;
+                delete t ;
+                continue ;
+            }
+        }
+        
+        q = p ;
+        p = p->next ;
+            
+    }
+    
+    return head ;
+}
