@@ -1,0 +1,51 @@
+Node* rev(Node *head)
+{
+    Node *p=head, *q=NULL, *r=NULL ;
+    while(p)
+    {
+        r = q ;
+        q = p ;
+        p = p->next ;
+        q->next = r ;
+    }
+    
+    return q ;
+}
+class Solution
+{
+    public:
+    //Function to add two numbers represented by linked list.
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        first = rev(first) ;
+        second = rev(second) ;
+        
+        Node *sum = NULL;
+        
+        int carry = 0 ;
+        while(first || second || carry)
+        {
+            int val=carry; 
+            
+            if(first)
+                val += first->data ;
+            
+            if(second)
+                val += second->data ;
+                
+            carry = val/10 ;
+            val = val%10 ;
+            
+            Node *np = new Node(val);
+            np->next = sum ;
+            sum = np ;
+            
+            if(first)
+                first = first->next ;
+            if(second)
+                second = second->next ;
+        }
+        
+        return sum ;
+    }
+};
