@@ -1,0 +1,46 @@
+Node* rev(Node *head)
+{
+    Node *p = head, *q = NULL, *r=NULL;
+    
+    while(p)
+    {
+        r = q ;
+        q = p ;
+        p = p->next ;
+        q->next = r ;
+    }
+    
+    return q ;
+}
+class Solution{
+  public:
+    //Function to check whether the list is palindrome.
+    bool isPalindrome(Node *head)
+    {
+        
+        Node *p = new Node(-1) ;
+        Node *q = head, *last = p ;
+        
+        while(q)
+        {
+            Node *np = new Node(q->data);
+            last->next = np ;
+            last = last->next ;
+            q = q->next ;
+        }
+        
+        p = p->next ;
+        p = rev(p);
+        
+        q = head ;    
+        while(p && q)
+        {
+            if(p->data != q->data)
+                return false;
+                
+            p = p->next; q = q->next ;
+        }
+        
+        return true ;
+    }
+};
