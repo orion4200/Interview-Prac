@@ -1,8 +1,8 @@
 class comp
 {
    public:
-   bool operator() (Node *a,  Node *b)
-   {
+   bool operator() (Node *a,  Node *b)             //operator overloading
+   {                                               //comparator func
        return a->data > b->data ;
    }
 };
@@ -11,14 +11,15 @@ class Solution{
     //Function to merge K sorted linked list.
     Node * mergeKLists(Node *arr[], int K)
     {
-        priority_queue<Node *, vector<Node*>, comp> q ;
+        priority_queue<Node *, vector<Node*>, comp> q ;              //priority queue using min heap
         
-        Node *np = new Node(-1);
-        Node *last = np ;
+        Node *np = new Node(-1);                                       //ans Node to be returned
+        Node *last = np ;                                              //tail node for ans 
         
         for(int i=0; i<K; i++)
         {
-            if(arr[i] != NULL)
+            if(arr[i] != NULL)                                       //k size min heap
+            
                 q.push(arr[i]);
         }
         
