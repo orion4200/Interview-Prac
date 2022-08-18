@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace::std ;
+
+
+stack<int> sort(stack<int> s)
+{
+    stack<int> temp; 
+    
+    while(!s.empty())
+    {
+        if(temp.empty())
+        {
+            temp.push(s.top());
+            s.pop();
+            continue ;
+        }
+        
+        int t = s.top();
+        s.pop();
+        while(!temp.empty() && t < temp.top())
+        {
+            int x = temp.top();
+            temp.pop();
+            s.push(x);
+        }
+        
+        temp.push(t);
+    }
+   
+    
+    return temp ;
+}
+
+void printStack(stack<int> s)
+{
+    while (!s.empty())
+    {
+        cout<<s.top()<<' ';
+       	s.pop();
+    }
+    cout<<endl;
+}
+
+int main()
+{
+	int n;
+	cin>>n ;
+	stack<int> st;
+	for(int i=0;i<n;i++)
+	{
+		int k;
+		cin>>k;
+		st.push(k);
+	}
+	printStack(sort(st));
+
+}
