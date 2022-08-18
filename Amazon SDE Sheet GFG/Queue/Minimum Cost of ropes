@@ -1,0 +1,40 @@
+class comp
+{
+    public:
+    bool operator() (long long int x, long long int y)
+    {
+        return x > y ;
+    }
+};
+class Solution
+{
+    public:
+    //Function to return the minimum cost of connecting the ropes.
+    long long minCost(long long arr[], long long n) {
+        
+        priority_queue<long long int, vector<long long int>, comp> q ;
+        
+        long long cost = 0 ;
+        
+        for(int i=0; i<n; i++)
+            q.push(arr[i]);
+            
+        while(q.size())
+        {
+            long long int x,y ;
+            x = q.top();
+            q.pop();
+            
+            if(q.size() == 0)
+                break ;
+            y = q.top();
+            q.pop();
+            
+            cost += x+y ;
+            
+            q.push(x+y);
+        }
+        
+        return cost ;
+    }
+};
