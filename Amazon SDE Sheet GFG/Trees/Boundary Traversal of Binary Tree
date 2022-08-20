@@ -1,0 +1,151 @@
+class Solution {
+public:
+    
+    bool isleaf(Node *p)
+    {
+        if(!p->left && !p->right)
+            return true;
+        return false ;
+    }
+    
+    void leaf_tr(Node *p, vector<int>&v)
+    {
+        if(!p)
+            return ;
+            
+        leaf_tr(p->left,v);
+        
+        if(isleaf(p))
+            v.push_back(p->data);
+        
+        leaf_tr(p->right,v);
+    }
+    
+    void l_tr(Node *p, vector<int>&v)
+    {
+       if(!p)
+        return ;
+        
+        if(p->left)
+        {
+            v.push_back(p->data);
+            l_tr(p->left,v);
+        }
+        else if(p->right)
+        {
+            v.push_back(p->data);
+            l_tr(p->right,v);
+        }
+            
+    }
+    
+    void r_tr(Node *p, vector<int>&v)
+    {
+       if(!p)
+        return ;
+        
+        if(p->right)
+        {
+            r_tr(p->right,v);
+            v.push_back(p->data);
+        }
+        else if(p->left)
+        {
+            r_tr(p->left,v);
+            v.push_back(p->data);
+        }
+    }
+    vector <int> boundary(Node *root)
+    {
+        vector<int> v ;
+        
+        if(isleaf(root))
+        {
+            v.push_back(root->data);
+            return v ;
+        }
+        
+        v.push_back(root->data);
+        
+        l_tr(root->left, v);
+        leaf_tr(root, v);
+        r_tr(root->right,v);
+        
+        return v ;
+    }
+};class Solution {
+public:
+    
+    bool isleaf(Node *p)
+    {
+        if(!p->left && !p->right)
+            return true;
+        return false ;
+    }
+    
+    void leaf_tr(Node *p, vector<int>&v)
+    {
+        if(!p)
+            return ;
+            
+        leaf_tr(p->left,v);
+        
+        if(isleaf(p))
+            v.push_back(p->data);
+        
+        leaf_tr(p->right,v);
+    }
+    
+    void l_tr(Node *p, vector<int>&v)
+    {
+       if(!p)
+        return ;
+        
+        if(p->left)
+        {
+            v.push_back(p->data);
+            l_tr(p->left,v);
+        }
+        else if(p->right)
+        {
+            v.push_back(p->data);
+            l_tr(p->right,v);
+        }
+            
+    }
+    
+    void r_tr(Node *p, vector<int>&v)
+    {
+       if(!p)
+        return ;
+        
+        if(p->right)
+        {
+            r_tr(p->right,v);
+            v.push_back(p->data);
+        }
+        else if(p->left)
+        {
+            r_tr(p->left,v);
+            v.push_back(p->data);
+        }
+    }
+    vector <int> boundary(Node *root)
+    {
+        vector<int> v ;
+        
+        if(isleaf(root))
+        {
+            v.push_back(root->data);
+            return v ;
+        }
+        
+        v.push_back(root->data);
+        
+        l_tr(root->left, v);
+        leaf_tr(root, v);
+        r_tr(root->right,v);
+        
+        return v ;
+    }
+};
