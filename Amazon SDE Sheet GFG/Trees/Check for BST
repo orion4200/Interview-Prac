@@ -1,0 +1,29 @@
+class Solution
+{
+    public:
+    void inorder(Node *root, vector<int>&v)
+    {
+        Node *p = root;
+        if(p)
+        {
+            inorder(p->left, v);
+            v.push_back(p->data);
+            inorder(p->right, v);
+        }
+    }
+    //Function to check whether a Binary Tree is BST or not.
+    bool isBST(Node* root) 
+    {
+        
+        vector<int> v ;
+        inorder(root, v);
+        
+        for(int i=0; i<v.size()-1; i++)
+        {
+            if(v[i] > v[i+1])
+                return false;
+        }
+        
+        return true;
+    }
+};
