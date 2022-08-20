@@ -1,0 +1,28 @@
+class Solution
+{
+    public:
+    void rightv(Node *root, int l, int &maxl, vector<int>&v)
+    {
+        if(!root)
+            return ;
+        
+        Node *p = root ;
+        if(maxl < l)
+        {
+            v.push_back(p->data);
+            maxl = l ;
+        }
+        
+        rightv(p->right, l+1, maxl, v);
+        rightv(p->left, l+1, maxl, v);
+    }
+    //Function to return list containing elements of right view of binary tree.
+    vector<int> rightView(Node *root)
+    {
+       vector<int> v ;
+       int maxl = 0 ;
+       
+       rightv(root, 1, maxl, v);
+       return v ;
+    }
+};
