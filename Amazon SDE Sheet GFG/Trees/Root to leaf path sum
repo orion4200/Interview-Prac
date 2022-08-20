@@ -1,0 +1,30 @@
+class Solution
+{
+    public:
+    bool isleaf(Node *p)
+    {
+        if(p->left || p->right || !p)
+            return 0 ;
+            
+        return 1 ;
+    }
+    bool hasPathSum(Node *root, int S) {
+    
+    if(!root)
+        return 0 ;
+        
+    int rem = S - root->data ;
+    
+    if(rem == 0 && isleaf(root))
+        return true ;
+        
+    bool ans = 0;
+    
+    if(root->left)
+        ans = ans || hasPathSum(root->left, rem);
+    if(root->right)
+        ans = ans || hasPathSum(root->right, rem);
+    
+    return ans ;
+}
+};
