@@ -1,0 +1,37 @@
+class Solution{
+public:	
+    
+	void matchPairs(char nuts[], char bolts[], int n) {
+	    /*char h[256] = {0} ;
+	    
+	    for(int i=0; i<n; i++)
+	        h[nuts[i]]++ ;
+	        
+	    for(int i=0; i<n; i++)
+	    {
+	        if(h[bolts[i]])
+	            nuts[i] = bolts[i];
+	    }*/
+	    
+      //depending on the q, not neccessary//
+      
+	    /*string s = "!#$%&*@^~" ;
+	    
+	    int i=0, j=0 ;
+	    while(i < n)
+	    {
+	        if(h[s[i]])
+	        {
+	            nuts[j] = bolts[j] = s[i];
+	            j++;
+	        }
+	        
+	        i++ ;
+	    }*/
+	    
+      
+      //shortcut jugaad
+	    sort(nuts, nuts+n); sort(bolts, bolts+n);
+	}
+
+};
