@@ -1,0 +1,47 @@
+class Solution {
+  public:
+    int romanToDecimal(string &str) {
+        
+        //char roman[] = {'I', 'V', 'X', 'L', 'C','D', 'M'};
+        map<char, int> mp ;
+        mp['I'] = 1 ;
+        mp['V'] = 5 ;
+        mp['X'] = 10 ;
+        mp['L'] = 50 ;
+        mp['C'] = 100 ;
+        mp['D'] = 500 ;
+        mp['M'] = 1000 ;
+        
+        if(str.length() == 1)
+        {
+            switch(str[0])
+            {
+                case 'I': return 1 ;
+                case 'V': return 5 ;
+                case 'X': return 10 ;
+                case 'L': return 50 ;
+                case 'C': return 100 ;
+                case 'D': return 500 ;
+                case 'M': return 1000 ;
+            }
+        }
+        else
+        {
+            int num=0, i=0;
+            for(i=0; i<str.length()-1; i++)
+            {
+                char c = str[i];
+                
+                if(mp[str[i]] < mp[str[i+1]])
+                    {num += mp[str[i+1]] - mp[str[i]] ; i++;}
+                else
+                    num += mp[c] ;
+            }
+            if(i == str.length()-1)
+                num += mp[str[i]] ;
+                
+            return num ;
+        }
+        
+    }
+};
