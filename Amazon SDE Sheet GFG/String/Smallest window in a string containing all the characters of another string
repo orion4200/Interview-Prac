@@ -1,0 +1,53 @@
+class Solution
+{
+    public:
+    //Function to find the smallest window in the string s consisting
+    //of all the characters of string p.
+    string smallestWindow (string s, string p)
+    {
+        map<char, int> mp ;
+        
+        if(s.length() < p.length())
+            return "-1" ;
+       
+        for(char c : p)
+            mp[c]++ ;
+            
+        int cnt = mp.size();
+        int i=0, j=0, len = INT_MAX, index ;
+        
+        while(j < s.length())
+        {
+            mp[s[j]]-- ;
+            
+            if(mp[s[j]] == 0)
+                cnt-- ;
+                
+            if(cnt == 0)
+            {
+                while(cnt == 0)
+                {
+                    if(len > j-i+1)
+                    {
+                        len = min(len, j-i+1);
+                        index = i ;
+                    }
+                
+                    mp[s[i]]++ ;
+                    
+                    if(mp[s[i]] > 0)
+                        cnt++ ;
+                        
+                    i++ ;
+                }
+            }
+            
+            j++ ;
+        }
+        if(len == INT_MAX)
+            return "-1" ;
+            
+        return s.substr(index, len) ;
+        
+    }
+};
