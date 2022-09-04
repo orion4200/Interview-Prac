@@ -1,0 +1,26 @@
+class Solution
+{
+    public:
+    //Function to check if a string can be obtained by rotating
+    //another string by exactly 2 places.
+    bool isRotated(string str1, string str2)
+    {
+        if(str1.length() != str2.length())
+            return 0 ;
+            
+        int n = str2.length();
+        
+        string t1 = str1.substr(2, n-2) ;
+        string t2 = str1.substr(0, n-2) ;
+        
+        t1 += str1[0] ; t1 += str1[1] ;
+        t2 = str1[n-1] + t2; t2 = str1[n-2] + t2 ;
+        
+        if(str2 != t1 && str2 != t2)
+            return 0 ;
+        else
+            return 1 ;
+        
+    }
+
+};
