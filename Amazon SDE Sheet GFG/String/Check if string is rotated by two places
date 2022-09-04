@@ -24,3 +24,8 @@ class Solution
     }
 
 };
+
+
+////O(1)///
+ For clockwise - str1[i] == str2[(i + 2) % n]
+ For anticlockwise - str1[(i + 2) % n] == str2[i]
