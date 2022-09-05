@@ -1,0 +1,37 @@
+class Solution{
+  public:
+    /*You are required to complete this method */
+    int atoi(string str) {
+        for(char c:str)
+        {
+            if(c < 48 || c > 57)
+            {
+                if(c == 45)
+                    continue ;
+                else 
+                    return -1 ;
+            }
+        }
+        int num=0, n = str.length(), i=0, minus=0 ;
+        
+        if(str[0] == '-')
+            {i = 1; minus = 1 ;}
+        
+        for(; i<str.length(); i++)
+        {
+            char c = str[i];
+            
+            if(c < 48 || c > 57)
+                return -1 ;
+                
+            c -= 48 ;
+            num *= 10; num += c ;
+        }
+        
+        if(!minus)
+            return num ;
+            
+        num = -1 * num ;
+        return num ;
+    }
+};
