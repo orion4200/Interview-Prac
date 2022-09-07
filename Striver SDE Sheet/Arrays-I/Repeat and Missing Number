@@ -1,0 +1,18 @@
+lass Solution {
+public:
+   int repeatedNumber(const vector<int> &A) {
+    
+        int n = A.size() ;
+        long long sq = (n*(n+1)*(2*n+1))/6 ;
+        long long s = n*(n+1)/2 ;
+        
+        for(int i=0; i<n; i++)
+        {
+            sq -= A[i] * A[i] ;
+            s -= A[i];
+        }
+        
+        s1 = sq/s ;
+        return (sq+s)/2 ; 
+}
+  };
