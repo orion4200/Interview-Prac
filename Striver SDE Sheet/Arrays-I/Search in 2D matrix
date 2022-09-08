@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int X) {
+        int n = matrix.size(), m = matrix[0].size()  ;
+        
+        int l = 0, h = n*m-1, mid ;
+        
+        while(l < h)
+        {
+            mid  = (l+h)/2 ;
+            
+            if(X < matrix[mid / m][mid % m])
+                h = mid-1 ;
+            else
+                l = mid+1 ; 
+        }
+        
+        return matrix[h / m][h % m] == X ;
+        
+    }
+};
