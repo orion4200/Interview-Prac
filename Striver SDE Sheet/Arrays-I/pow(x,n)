@@ -1,0 +1,22 @@
+class Solution {
+public:
+    double myPow(double x, int n) {
+        
+        if(n == 0 || x == 1)
+            return 1 ;
+        
+        long long nn = n ;
+        if(n < 0)
+        {nn = -nn ; x = 1/x ;}
+        
+        double num = myPow(x, nn/2) ;
+        double y = pow(num, 2) ;
+        
+        double ans ;
+            
+        if(nn%2 == 0)
+            return y ;
+        else
+            return y * x ;
+    }
+};
