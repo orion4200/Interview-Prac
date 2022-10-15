@@ -25,3 +25,23 @@ public:
         return 0 ;
     }
 };
+
+
+///////////////////////////majority element using Moore intuition//////////////////////////
+
+int cnt = 0 ;
+int num ;
+
+for(auto it : nums)
+{
+    if(cnt == 0)
+        num = it ;
+
+    if(it == num)
+        cnt++ ;
+    else
+        cnt -- ;
+}
+return num ;
+
+
