@@ -31,3 +31,31 @@ class Solution{
         
     }
 };
+
+/////////////////leetcode///////////////////////
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *p = headA, *q = headB ;
+        
+        if(headA == headB)
+            return headA ;
+        
+        if(p == NULL || q == NULL)
+            return NULL ;
+        
+        while(p && q && p != q)
+        {
+            p = p->next ;
+            q = q->next ;
+            
+            if(p == q)
+                return p ;
+            
+            if(p == NULL)   p = headB ;           ///////interchanging the pointers when they reach NULL so that they become equidistant wrt each other(in case of LLs having different lengths)
+            if(q == NULL)   q = headA ;
+        }
+        return p ;
+    }
+};
