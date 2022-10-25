@@ -1,3 +1,5 @@
+//////gfg//////////different type of intersection, refer https://practice.geeksforgeeks.org/problems/intersection-of-two-linked-list/1//////////////////
+
 class Solution{
   public:
     Node* findIntersection(Node* head1, Node* head2)
