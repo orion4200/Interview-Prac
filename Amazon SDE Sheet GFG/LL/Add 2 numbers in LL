@@ -23,7 +23,7 @@ class Solution
         Node *sum = NULL;
         
         int carry = 0 ;
-        while(first || second || carry)
+        while(first || second || carry)                 /////////////when carry remains/////////////
         {
             int val=carry; 
             
