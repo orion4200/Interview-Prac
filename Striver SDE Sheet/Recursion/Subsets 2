@@ -1,0 +1,41 @@
+class Solution {
+public:
+    void solve(vector<int> A, vector<int>op, map<vector<int>, int>& mp){
+        if(A.size() == 0)
+        {
+            sort(op.begin(), op.end());             
+            mp[op]++ ;                                  ///////valid output array added to map
+            return ;
+        }
+        
+        vector<int> op2 = op ;        //////output 2 is op + last el of a (input array)
+        int x = A.back() ;
+        op2.push_back(x);
+        
+        A.pop_back() ;
+        
+        solve(A, op, mp) ;              ////////output 1 is same as op
+        solve(A, op2, mp) ;
+        
+        return ;
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& A) {
+        map<vector<int>, int> mp ; mp.clear();
+        vector<vector<int>> res ;
+        vector<int> op = {} ;
+        
+        if(A.size() == 0)
+        { res.push_back({ }) ; return res;}
+        
+        //sort(A.begin(), A.end());
+        solve(A, op, mp) ;
+        
+        for(auto it:mp)
+        {
+            res.push_back(it.first) ;               /////distinct arrays only
+            //mp.erase(it) ;
+        }
+        
+        return res ;
+    }
+};
