@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void solve(vector<int> input, vector<int> op, vector<vector<int>>& res, int t, int i)
+    {
+        if(i == input.size())                 /////base case if iterator reaches end of input
+        {
+            if(t == 0)                            /////when i is at the end of input array and target-sum == 0
+                res.push_back(op) ;
+            return ;
+        }
+
+        if(t < 0)
+            return ;
+
+        if(t >= 0)
+        {
+            solve(input, op, res, t, i+1) ;                 /////do not select element and output remains same
+
+            op.push_back(input[i]) ;
+        
+            solve(input, op, res, t-input[i], i) ;                  ////////select element from input array and insert it into output array
+        }
+
+
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+
+        vector<vector<int>> res ; 
+
+        solve(candidates, {}, res, target, 0) ;
+
+        return res ;
+    }
+};
