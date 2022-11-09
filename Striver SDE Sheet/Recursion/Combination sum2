@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void solve(vector<int> input, vector<int> op, vector<vector<int>>& res, int t, int i)
+    {
+        if(t == 0)
+        {
+            res.push_back(op) ;
+            return ;
+        }           
+        if(t < 0)
+            return ;
+
+        if(i == input.size())
+            return ;
+
+        op.push_back(input[i]) ;
+        solve(input, op, res, t-input[i], i+1) ;
+        op.pop_back() ;
+
+        while(i < input.size()-1 && input[i] == input[i+1]) i++ ;             ////////skipping all same numbers, if number x is selected then any other occurrence of x wont be selected
+        solve(input, op, res, t, i+1) ;        
+        
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end()) ;
+
+        vector<vector<int>> res ;
+        solve(candidates, {}, res, target, 0) ;
+        return res ;
+    }
+}
