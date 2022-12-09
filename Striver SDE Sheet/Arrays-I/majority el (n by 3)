@@ -1,0 +1,73 @@
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size()/3 ;
+        vector<int> res ;
+        
+        if(n == 0)
+        {
+            res.push_back(nums[0]) ;
+            if(nums.size() == 2 && nums[0] != nums[1])
+                res.push_back(nums[1]) ;
+            
+            return res ;
+        }
+        
+        int i=0, cnt = 1 ;
+        sort(nums.begin(), nums.end());
+
+        while(i < nums.size()-1)
+        {
+            while(i < nums.size()-1 && nums[i] == nums[i+1])
+            {cnt++; i++ ;}
+
+            if(cnt > n)
+                res.push_back(nums[i]);
+        
+            cnt = 1 ;
+            i++ ;
+            //cout<<cnt<<endl ;
+        }
+
+        return res ;
+    }
+};
+
+
+
+
+////////////////////////alt soln by Moore's intuition////////////////////////////////////////
+
+      vector<int> majorityElement(vector<int>& nums) {
+        int c1=0, c2=0, num1 = -1, num2 = -1, n = nums.size()/3, el ;                   //there can be only 2 majority el at max
+
+        for(int i=0; i<nums.size(); i++)
+        {
+            el = nums[i] ;
+
+            if(el == num1) c1++ ;
+            else if(el == num2) c2++ ;
+            else if(c1 == 0) {num1 = el ; c1 = 1 ;}
+            else if(c2 == 0) {num2 = el ; c2 = 1 ;}
+            else 
+            {
+                c1-- ;
+                c2 -- ;
+            }
+        }                                                                               //majprity el will be either num1 or num2 or both or none
+                            
+        c1 = c2 = 0 ;                                                                     
+
+        for(int i=0; i<nums.size(); i++)                                                //count occur of num1 and num2
+        {
+            if(nums[i] == num1) c1++ ;
+            if(nums[i] == num2) c2++ ;
+        }
+        
+        vector<int> res ;                                                               //check if num1 or num2 are majority el or not
+        if(c1 > n) res.push_back(num1) ;
+        if(c2 > n && num1 != num2) res.push_back(num2) ;
+
+        return res ;
+
+    }
