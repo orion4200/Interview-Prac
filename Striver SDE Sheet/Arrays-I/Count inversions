@@ -1,31 +1,27 @@
-//{ Driver Code Starts
+
 #include <bits/stdc++.h>
 using namespace std;
 
 
-// } Driver Code Ends
 class Solution{
-  public:
+  public:                                                                           // we perfomr merge sort and count no. of inverted pairs
     // arr[]: Input Array
     // N : Size of the Array arr[]
     // Function to count inversions in the array.
-    long long merge(long long arr[], long long l, long long m, long long h)
+    
+    long long merge(long long arr[], long long l, long long m, long long h)             // function to merge two sorted arrays (part of merge sort)
     {
         long long i=l, k=l, j=m+1; 
         long long b[500001] ;
         long long cnt=0;
         
-       /* for(i;i<=m;i++){
-            j=m+1;
-            while(j<=h && arr[i]>arr[j])    j++;
-                cnt+=j-m-1;
-        }*/
+      
         i=l,j=m+1;
         while(i<=m && j<=h){
             if(arr[i]<=arr[j]){
                 b[k++]=arr[i++];
             }else{
-                cnt+=m-i+1;
+                cnt+=m-i+1;                                                                     // count all number between the numbers being swapped since they will all form inverted pairs
                 b[k++]=arr[j++];
             }
         }
@@ -41,7 +37,7 @@ class Solution{
         return cnt ;
     }
     
-    long long mergeSort(long long arr[], long long l, long long  h)
+    long long mergeSort(long long arr[], long long l, long long  h)                       // merge sort
     {
         long long cnt=0 ;
         if(l < h)
