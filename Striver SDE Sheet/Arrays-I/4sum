@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> res ;
+        map<vector<int>, int> mp; mp.clear() ;
+
+        sort(nums.begin(), nums.end()) ;
+        int n = nums.size() ;
+
+        for(int i=0; i<n; i++)
+        {
+            for(int j=i+1; j<n; j++)
+            {
+                long long t2 = nums[i] + nums[j] ;                                // long long necessary to hold sum, otherwise overflow
+                int k = j+1, l = nums.size()-1 ;
+                while(k < l)
+                {
+                    long long t3 = nums[k] + nums[l] ;
+                    if(target == t2+t3)
+                    {
+                        mp[{nums[i], nums[j], nums[k], nums[l]}]++ ;
+                        k++ ; l-- ;
+                    }
+                    else if(target > t2+t3)
+                        k++ ;
+                    else
+                        l-- ;
+                }
+            }
+        }
+        for(auto it:mp)
+            res.push_back(it.first) ;
+
+        return res ;
+    }
+};
