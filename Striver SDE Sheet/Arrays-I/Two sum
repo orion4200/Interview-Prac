@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> ans ;
+        
+        unordered_map<int, int> mp ; mp.clear() ;
+        
+        for(int i=0; i<nums.size(); i++)
+        {
+            if(mp.find(target-nums[i]) != mp.end())                               // if target-nums[i] exists then push back its index and target-nums[i]'s index
+            {
+                ans.push_back(i); ans.push_back(mp[target-nums[i]]) ;
+                return ans ;
+            }
+            
+            mp[nums[i]] = i ;                                                   // if not, add el to map with value being its index
+        }
+        
+        return ans ;
+    }
+};
