@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        sort(nums.begin(), nums.end()) ;
+        int len=0, max_len=0 ;
+
+        if(nums.size() == 0) return 0 ;
+
+        for(int i=0; i<nums.size()-1; i++)
+        {
+            if(nums[i]+1 == nums[i+1])                          // if consecutive number, then len++
+                len++ ;
+            else if(len && nums[i] == nums[i+1])                // ex - 0,1,1,2 will be counted 3  
+                continue ;
+            else
+                len = 0 ;
+
+            max_len = max(max_len, len) ;
+        }
+        return max_len+1 ;
+     }
+   ];
