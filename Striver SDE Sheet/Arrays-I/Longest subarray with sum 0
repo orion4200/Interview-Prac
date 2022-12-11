@@ -1,0 +1,26 @@
+class Solution{
+    public:
+    int maxLen(vector<int>&nums, int n)
+    {   
+        unordered_map<int, int> mp; mp.clear() ;
+        long long sum = 0 ;
+        int max_len = 0 ;
+        
+        for(int i=0; i<n; i++)
+        {
+            sum += nums[i] ;
+            
+            if(sum == 0)                                              // if sum 0, then maximum subarray length is i+1
+                max_len = i+1 ;
+            else
+            {
+                if(!mp.count(sum))                                    // if sum not in map, add it with its value being the index where we got that sum
+                    mp[sum] = i ;
+                else
+                    max_len = max(max_len, i - mp[sum]) ;             // if sum present in map, subarray length with 0 sum is current index minus index where we last got that sum
+            }
+
+        }
+        return max_len ;
+    }
+};
