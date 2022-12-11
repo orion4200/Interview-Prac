@@ -19,4 +19,40 @@ public:
         }
         return max_len+1 ;
      }
-   ];
+   };
+
+///////////////////////////////////////////O(n) hashset solution//////////////////////////////////
+
+class Solution {
+public:
+int longestConsecutive(vector<int>& nums) {
+        if(nums.size() == 0) return 0 ;
+        
+        set<int> s ;
+
+        for(int i : nums)
+            s.insert(i) ;
+
+        int len = 0 ;
+
+        for(int i : s)
+        {
+            if(s.count(i-1))                                        // search if num-1 exists or not, if exists the its not the first number of sequence
+                continue ;
+            else
+            {
+                int count = 0, cur_num = i ;
+
+                while(s.count(cur_num))                              // while consecutive numbers exist
+                {
+                    count++ ;
+                    cur_num++ ;
+                }
+
+                len = max(count, len) ;
+            }
+        }
+        return len ;
+
+    }
+};
