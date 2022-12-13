@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL)
+            return 0 ;
+        
+        ListNode *p = head, *q = head->next ;
+        
+        while(p != NULL && q != NULL)
+        {
+            if(p == q)
+                return true;
+            
+            q = q->next ;
+            
+            if(q)
+                q = q->next ;                              // move q by 2 steps and p by 1
+            else
+                return false ;                              // NULL occurs, hence no cycle
+            p = p->next ;        
+        }
+        
+        return false ;                                      // NULL occurs, hence no cycle
+    }
+};
