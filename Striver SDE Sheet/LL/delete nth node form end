@@ -1,0 +1,21 @@
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+ListNode *np = new ListNode ;
+        np->next = head ;                                // dummy node's next points to head
+        ListNode *f = np, *s = np ;                     // fast and slow pointer pointing to dummy node np
+
+        for(int i=0; i<n; i++)
+            f = f->next ;                               // move fast pointer by n steps
+
+        while(f->next != NULL)                            // move fast and slow pointer by 1 step till fast->next = NULL
+        {
+            f = f->next ;
+            s = s->next ;
+        }
+
+        if(s->next)                                        // delete s->next
+            s->next = s->next->next ;
+        else
+            s->next = NULL ;
+
+        return np->next ;
+     }
