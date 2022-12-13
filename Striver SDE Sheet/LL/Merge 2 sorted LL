@@ -1,0 +1,77 @@
+///////////////////space complexity O(n1 + n2)///////////////////////////////////////////////
+
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode *start = new ListNode(-1, NULL) ;
+        ListNode *np = start ;
+        
+        while(list1 && list2)
+        {
+            if(list1->val <= list2->val)
+            {
+                ListNode *temp = new ListNode(list1->val, NULL) ;
+             
+                np->next = temp ;
+                np = np->next ;
+                
+                list1 = list1->next ;
+            }
+            else
+            {
+                ListNode *temp = new ListNode(list2->val, NULL) ;
+
+                np->next = temp ;
+                np = np->next ;
+                
+                list2 = list2->next ;
+            }
+        }
+        
+        if(list1)
+            np->next = list1 ;
+        else if(list2)
+            np->next = list2 ;
+        
+        return start->next ;
+    }
+};
+
+
+////////////////////////In place merging////////////////////////////////////////
+
+ListNode *np = list1, *temp = NULL ;
+        
+        if(list1 == NULL) return list2 ;
+        else if(list2 == NULL) return list1 ;
+        else if(!list1 && !list2) return NULL ;
+
+        
+        if(list1->val > list2->val)                           // np points to smaller node
+            np = list2 ;
+
+        ListNode *start = np ;                                // head of result
+
+        while(list1 && list2)
+        {
+            if(list1->val <= list2->val)
+            {
+                temp = list1 ;                                // assign temp to l1
+                list1 = list1->next ;                          // move l1 to its next
+                np->next = temp ;                             // assign np's next to l1 
+            }
+            else
+            {
+                temp = list2 ;
+                list2 = list2->next ;
+                np->next = temp ;
+            }
+            np = np->next ;
+        }
+        if(list1)
+            np->next = list1 ;
+        else if(list2)
+            np->next = list2 ;
+
+        return start ;
+    }
