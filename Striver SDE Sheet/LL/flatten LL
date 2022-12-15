@@ -1,0 +1,40 @@
+Node *merge(Node *p, Node *q)                       // merging 2 LL
+{ 
+    Node *res = new Node(-1) ;
+    Node *np = res ;
+    
+    while(p && q)
+    {
+        if(p->data <= q->data)
+        {
+            np->bottom = p ;
+            np = np->bottom ;
+            p = p->bottom ;
+        }
+        else
+        {
+            np->bottom = q ;
+            np = np->bottom ;
+            q = q->bottom ;
+        }
+    }
+    
+    if(p)
+        np->bottom = p ;
+        
+    if(q)
+        np->bottom = q ;
+        
+    return res->bottom ;
+}
+
+Node *flatten(Node *root)
+{
+    if(root->next == NULL)
+        return root ;
+        
+    root->next = flatten(root->next) ;                  // reach the last node
+        
+    return merge(root, root->next) ;                    // return merged result of last 2 nodes
+    
+}
