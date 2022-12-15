@@ -1,0 +1,35 @@
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *p = head, *q = head ;
+        int len = 0 ;
+        while(p)                                                // length of LL
+        {
+            len++ ;
+            p = p->next ;
+        }
+        p = head ;
+
+        int i=0 ;
+        while(len-i >= k)                                       
+        {
+            int j=0 ;                                          // j always moves k steps from 0
+            stack<int> st ;
+            while(j<k && j<len)                               // q moves k steps and val of each node stored in stack
+            {
+                st.push(q->val) ;
+                q = q->next ;
+                j++ ; i++ ;                                   // i incr
+            }
+            
+            while(!st.empty())                                  // p moves k steps and top value of stack stored in node 
+            {
+                int x = st.top() ; st.pop() ;
+                p->val = x ;
+                p = p->next ;
+            }
+        }
+
+        return head ;
+    }
+};
