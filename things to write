@@ -1,3 +1,4 @@
 1. initializing 2D vector - vector<vector<int>> vec(m, vector<int> (n,0)) ;
 2. Count Inversion logic
 3. LL q done in striver sheet in vacation
+4. Subarray with given XOR logic
