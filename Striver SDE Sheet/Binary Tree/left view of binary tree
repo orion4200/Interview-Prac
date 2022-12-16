@@ -1,0 +1,44 @@
+void leftv(Node *root, int level, int &maxlevel, vector<int>&v)
+{
+    if(!root)
+        return ;
+    
+    Node *p = root ;       
+    if(maxlevel < level)
+    {
+        v.push_back(p->data);
+        maxlevel = level;
+    }
+    
+    leftv(p->left, level+1, maxlevel, v);
+    leftv(p->right, level+1, maxlevel, v);
+}
+
+vector<int> leftView(Node *root)
+{
+    vector<int> v ;
+    int maxlevel=0 ;
+    leftv(root, 1, maxlevel, v);
+    
+    return v ;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void solve(Node *root, vector<int>& v, int lvl)
+{
+    if(root == NULL) return ;
+    
+    if(lvl == v.size()) v.push_back(root->data) ;
+    
+    solve(root->left, v, lvl+1); 
+    solve(root->right, v, lvl+1) ;
+}
+
+vector<int> leftView(Node *root)
+{
+   vector<int> lv ;
+   solve(root, lv, 0) ;
+   return lv ;
+}
