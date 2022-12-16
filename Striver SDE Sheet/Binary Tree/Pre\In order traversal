@@ -1,0 +1,65 @@
+
+/////////////////////////////////Morris Traversal, TC- o(N), space - o(1)////////////////////////////////////////
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+vector<int> v ;
+        TreeNode *p = root ;
+
+        while(p)
+        {
+            if(p->left == NULL)
+            {
+                v.push_back(p->val) ;
+                p = p->right ;
+            }
+            else
+            {
+                TreeNode *np = p->left ;
+
+                while(np->right && np->right != p) np = np->right ;
+                
+                if(np->right == NULL)
+                {
+                    np->right = p ;
+                    p = p->left ;
+                }
+                else
+                {
+                    np->right = NULL ;
+                    v.push_back(p->val) ;
+                    p = p->right ;
+                }
+            }
+        }
+        return v ;
+    }
+};
+
+
+//////////////////////////////////iterative soln, TC-o(N), space-o(N)///////////////////////////////////////////
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+    TreeNode* p = root ;
+        vector<int>v ; v.clear();
+        stack<TreeNode*>st ;
+        while(p != NULL || !st.empty())
+        {
+            if(p != NULL)
+            {
+                st.push(p);
+                p = p->left; 
+            }
+            else
+            {
+                p = st.top();
+                st.pop();
+                v.push_back(p->val);
+                p = p->right ;
+            }
+        }
+        return v 
+   }
+};
