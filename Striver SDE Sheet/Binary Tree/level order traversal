@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> res ;
+        if(!root)
+            return res ;
+        
+        queue<TreeNode *> q ;
+        
+        //res.push_back({root->val}) ;
+        q.push(root) ;
+        q.push(NULL) ;                                          // use marker NULL to identify whether that level is finished or not
+
+        vector<int> v ;                                         // vector for each level....clear after every level
+        while(!q.empty())
+        {
+            TreeNode* p = q.front() ;
+            q.pop() ;
+
+            if(p)
+            {
+                if(p->left)  q.push(p->left) ;
+                if(p->right) q.push(p->right) ;
+
+                v.push_back(p->val) ;
+            }
+            else                                                // NULL encountered signifies level has been traversed
+            {
+                res.push_back(v) ;
+                v.resize(0) ;                                 // clear v
+                if(!q.empty())
+                    q.push(NULL) ;                              // add marker if q is not empty otherwise end of tree
+            }
+        }
+
+        return res ;
+
+    }
+};
