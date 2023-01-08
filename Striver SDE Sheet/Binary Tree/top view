@@ -1,0 +1,42 @@
+class Solution
+{
+    public:                                                                               
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    vector<int> topView(Node *root)                                         // conditionally add node value to map if it doesnt exist already rest logic same as bottom view
+    {
+        if(!root)
+            return {};
+        
+        vector<int> ans ;                                                               
+        map<int, int> mp ;
+        queue<pair<Node*, int>> q ;
+        
+        q.push(make_pair(root,0)) ;                                   // pair inludes node and level
+        
+        while(!q.empty())
+        {
+            auto p = q.front() ;  
+            q.pop() ;
+            
+            if(mp.find(p.second) == mp.end())                          // if it doesnt exist in map then add it 
+                mp[p.second] = p.first->data ;
+                
+            int lvl = p.second ;
+            
+            if(p.first->left)
+                q.push(make_pair(p.first->left, lvl-1)) ;
+                
+            if(p.first->right)
+                q.push(make_pair(p.first->right, lvl+1)) ;
+            
+        }
+        
+        
+        for(auto it:mp)
+            ans.push_back(it.second) ;
+            
+        return ans ;
+    }
+
+};
