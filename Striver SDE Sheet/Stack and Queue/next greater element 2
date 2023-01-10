@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        int n = nums.size() ;
+        stack<int> st ;
+        //map<int, int> mp ;
+
+        vector<int> res(n, -1) ;
+
+        for(int i=2*n-1; i>=0; i--)                                         // start from last, i runs from 2n-1 to 0 but we use i%n for accessing el
+        {
+            while(!st.empty() && st.top() <= nums[i%n])                     // keep popping till we have stack top > el                    
+                st.pop() ;  
+
+            if(i < n && !st.empty()) res[i%n] = st.top() ;                  // we have to add result only for i<n and if stack is not empty(means there is a greater el) then push
+
+            st.push(nums[i%n]) ;
+        }
+
+        return res ;
+
+    }
+};
