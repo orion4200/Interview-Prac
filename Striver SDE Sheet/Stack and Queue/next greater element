@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        stack<int> st ;
+        unordered_map<int, int> mp ;
+
+        for(int i=0; i<nums2.size(); i++)
+        {
+            while(!st.empty() && st.top() < nums2[i])                                     // is el is > st.top
+            {
+                mp[st.top()] = nums2[i] ;                                                 // add next greater el of that el in map
+                st.pop() ;
+            }
+            st.push(nums2[i]) ;                                                           // push the el in stack no matter what
+        }
+
+        vector<int> res ;
+        for(auto a:nums1)
+        {
+            if(mp.find(a) != mp.end())
+                res.push_back(mp[a]) ;
+            else
+                res.push_back(-1) ;
+        }
+        return res ;
+    }
+};
