@@ -1,0 +1,23 @@
+void insert(stack<int>&st, int temp)
+{
+    if(st.size() == 0 || st.top() <= temp)                      // if stack is empty or top el is less than el to be inserted
+    {
+        st.push(temp) ;
+        return ;
+    }
+    
+    int val = st.top();                                       // else keep popping the top el and calling insert func till the above if condn is satisfied and el is inserted at right place
+    st.pop();
+    insert(st, temp) ;
+    st.push(val) ;                                            // through backtracking insert el that was popped 
+}
+void SortedStack :: sort()
+{
+    if(s.size() == 1)
+        return ;
+        
+    int temp = s.top() ;                    // pop out top el and insert it at right place using insert func
+    s.pop();                                // through backtracking, all el will be popped first and then the stack is sorted
+    sort() ;
+    insert(s,temp);
+}
