@@ -1,0 +1,42 @@
+vector<vector<int>> getTreeTraversal(TreeNode *root){                   
+    if(!root) return {{}} ;
+    
+    stack<pair<TreeNode*, int>> st ;
+    vector<int> pre, post, in ;
+    vector<vector<int>> ans ;
+    
+    st.push(make_pair(root, 1)) ;                           // every node is added with num as 1
+    
+    while(!st.empty())
+    {
+        auto np = st.top() ;
+        st.pop() ;
+        
+        if(np.second == 1)                                        //if num is 1 then add to preorder list and push back to stack with num 2 
+        {
+            pre.push_back(np.first->data) ;
+            
+            st.push(make_pair(np.first, ++np.second)) ;           // push back to stack with num 2 
+            if(np.first->left)                                    // if left exists, the push to stack with num 1
+                st.push(make_pair(np.first->left, 1)) ;
+        }
+        else if(np.second == 2)                                 //if num is 2 then add to inorder list and push back to stack with num 3
+        {
+            in.push_back(np.first->data) ;
+            
+            st.push(make_pair(np.first, ++np.second)) ;
+            if(np.first->right)                                 // if right exists, the push to stack with num 1
+                st.push(make_pair(np.first->right, 1)) ;
+        }
+        else                                                      // if num is 3 then dont push back to stack only add to postorder list
+        {
+            post.push_back(np.first->data) ;
+        }
+    }
+    ans.push_back(in) ;
+    ans.push_back(pre) ;
+    ans.push_back(post) ;
+
+    return ans ;
+     
+}
