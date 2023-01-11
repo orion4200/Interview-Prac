@@ -1,0 +1,56 @@
+////// logic -> >sort arrays in descending order
+                >find sum of first el of a and each el of b
+                >find sum of first el of b and each el of a
+                >insert the sums in max heap for c times 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vector<int> Solution::solve(vector<int> &a, vector<int> &b, int c) {
+    sort(a.rbegin(), a.rend()) ;
+    sort(b.rbegin(), b.rend()) ;
+    
+    vector<int> ans ;
+    
+    int n = a.size() ;
+    
+    set<pair<int, int>> s ;                                                                   // set stores indexes whose sum is taken so that heap has unique sum combinations
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>> q ;          // create of type (sum, (index of a, index of b))
+    
+    q.push(make_pair(a[0]+b[0], make_pair(0,0))) ;                        // sum of first index of a and b pushed (this will be the largest sum)
+    s.insert(make_pair(0,0)) ;
+    
+    for(int k = 0; k<c; k++)
+    {
+        auto p = q.top() ;
+        q.pop() ;
+        
+        ans.push_back(p.first) ;                                      // keep pushing top of queue to ans
+        
+        int i = p.second.first ;                                      // i in a, j in  b
+        int j = p.second.second ;
+        
+        pair<int, pair<int, int>> t1, t2 ;
+        pair<int, int> d1, d2 ;
+        
+        //insert sum(i+1 and  j)
+        d1 = make_pair(i+1, j) ;
+        t1 = make_pair(a[i+1]+b[j], d1) ;
+        
+        if(s.find(d1) == s.end())                           // only insert in heap if that combo not present already
+        {
+            q.push(t1) ;
+            s.insert(d1) ;
+        }
+        
+        //insert sum(i and j+1)
+        d2 = make_pair(i, j+1) ;
+        t2 = make_pair(a[i]+b[j+1], d2) ;
+        
+        if(s.find(d2) == s.end())
+        {
+            q.push(t2) ;
+            s.insert(d2) ;
+        }
+    }
+    return ans ;
+}
