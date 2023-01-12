@@ -1,0 +1,51 @@
+////////logic - > create one min heap and max heap
+                > if max heap is empty, add num to it and keep its size either equal to or 1 greater than size of min heap
+                > if number is less than top of max heap then add num to max heap and balance the sizes as per above point
+                > if size of max heap = size of min heap then median is avg of top of both heaps
+                > if max heap size = min heap size + 1, then median is top of max heap
+
+
+
+
+class MedianFinder {
+public:
+    priority_queue<int, vector<int>> max ;                      // max heap
+    priority_queue<int, vector<int>, greater<int>> min ;        // min heap
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        if(max.empty() || num < max.top())
+            max.push(num) ;
+        else
+            min.push(num) ;
+
+        int n1 = max.size() ;
+        int n2 = min.size() ;
+
+        if(n1 > n2+1)                                                   // balance size
+        {
+            min.push(max.top()) ;
+            max.pop() ;
+        }
+        else if(n2 > n1)
+        {
+            max.push(min.top()) ;
+            min.pop() ;
+        }
+    }
+    
+    double findMedian() {
+        int n1 = max.size() ;
+        int n2 = min.size() ;
+
+        double med = 0 ;
+        if(n1 == n2)
+            med = (double)(max.top() + min.top())/2 ;
+        else
+            med = max.top() ;
+
+        return med ;
+    }
+};
