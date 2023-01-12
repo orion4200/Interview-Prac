@@ -26,7 +26,7 @@ public:
                     q.push(make_pair(p.first->left, (long long)2*ind+1)) ;                   // index of lchild of node is 2*index of node + 1
                                                                                               // we typecast to ll as 2^32 will result in int overflow
                 if(p.first->right)
-                    q.push(make_pair(p.first->right, (long long)2*ind+2)) ;                  // index of rchild of node is 2*index of node + 1 
+                    q.push(make_pair(p.first->right, (long long)2*ind+2)) ;                  // index of rchild of node is 2*index of node + 2 
             }
         }
         return res ;
