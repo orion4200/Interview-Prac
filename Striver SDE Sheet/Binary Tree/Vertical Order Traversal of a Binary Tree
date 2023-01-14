@@ -1,0 +1,43 @@
+class Solution {
+public:
+    
+    vector<vector<int>> verticalTraversal(TreeNode* root) {                     // queue(node, vertical, level) type data structure
+        queue<pair<TreeNode*, pair<int, int>>> q ;
+        q.push(make_pair(root, make_pair(0,0))) ;
+
+        map<int, map<int, multiset<int>>> rc ;                                // map(vertical, map(level, values in multiset)) -another map is used so thatwe can store values from top level to bottom in a vertical
+                                                                              // we use multiset since we can have same values in same vertical and level
+        while(!q.empty())
+        {
+            auto np = q.front() ;
+            q.pop() ;
+            
+            int row = np.second.second ;                // level
+            int col = np.second.first ;                 // vertical
+
+            rc[col][row].insert(np.first->val);
+
+            if(np.first->left)
+            {
+                q.push(make_pair(np.first->left, make_pair(col-1, row+1))) ;      //vertical-1 when going to left
+            }
+            if(np.first->right)
+            {
+                q.push(make_pair(np.first->right, make_pair(col+1, row+1))) ;     //vertical+1 when going to right
+            }                                                                     // every time level+1
+
+        }
+        
+        vector<vector<int>> ans ;
+        for(auto it:rc)
+        {
+            vector<int> col ;                       // for each level
+            for(auto iy:it.second)
+            {
+                col.insert(col.end(), iy.second.begin(), iy.second.end()) ;     // insert contents of multiset at end of col vector
+            }
+            ans.push_back(col) ;
+        }
+        return ans ;
+    }
+};
