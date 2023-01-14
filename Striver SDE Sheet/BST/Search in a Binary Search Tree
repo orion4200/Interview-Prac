@@ -1,0 +1,19 @@
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(!root) return NULL ;
+
+        TreeNode* p = root ;
+        while(p && p->val != val)
+        {
+            if(p->val > val)
+                p = p->left ;
+            else if(p->val < val)
+                p = p->right ;
+            else    
+                return p ;
+        }
+
+        return p ;
+    }
+};
