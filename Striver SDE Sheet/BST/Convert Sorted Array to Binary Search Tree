@@ -1,0 +1,21 @@
+class Solution {
+public:
+    TreeNode* solve(vector<int>& v, int l, int r)
+    {
+        if(l > r)                                       // inorder traversal of BST is a sorted array
+            return NULL;
+
+        int mid = (l+r)/2 ;                             // mid will be root
+        TreeNode *root = new TreeNode(v[mid]) ;
+
+        root->left = solve(v, l, mid-1) ;                // form left subtree from values left of mid in array  
+        root->right = solve(v, mid+1, r) ;                // form right subtree from values right of mid in array
+
+        return root ;                                     // return the root
+    }
+    TreeNode* sortedArrayToBST(vector<int>& nums) { 
+        int n = nums.size() ;
+
+        return solve(nums, 0, n-1) ;
+    }
+};
