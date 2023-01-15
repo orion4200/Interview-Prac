@@ -1,0 +1,14 @@
+class Solution {
+public:
+    bool solve(TreeNode* root, TreeNode* min, TreeNode* max)                      // min - minimum limit of value allowed, max- max limit of value allowed
+    {
+        if(!root) return 1 ;
+
+        if((min && root->val <= min->val) || (max && root->val >= max->val)) return 0 ;
+
+        return (solve(root->left, min, root) && solve(root->right, root, max)) ;                      // on left, val should not be more than root, so max is root   // on right, val should not be less than root, so min is root
+    }
+    bool isValidBST(TreeNode* root) {
+        return solve(root, NULL, NULL) ;    
+    }
+};
