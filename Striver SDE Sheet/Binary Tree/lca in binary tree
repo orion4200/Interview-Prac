@@ -1,14 +1,14 @@
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(!root || root->val == p->val || root->val == q->val)
+        if(!root || root->val == p->val || root->val == q->val)   // if root is NULL or value matches then return root 
             return root;
             
-        TreeNode *l = lowestCommonAncestor(root->left, p, q);
-        TreeNode *r = lowestCommonAncestor(root->right, p, q);
+        TreeNode *l = lowestCommonAncestor(root->left, p, q);   //traverse left 
+        TreeNode *r = lowestCommonAncestor(root->right, p, q);  // traverse right (BFS)
         
-        if(!l) return r ;
+        if(!l) return r ;                                        // if value doesnt match with p or q return NULL
         else if(!r) return l ;
-        else return root ;
+        else return root ;                                      // if value matches to either p or q then we return the node
     }
 };
