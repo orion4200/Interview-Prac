@@ -5,7 +5,7 @@ public:
             return root;
             
         TreeNode *l = lowestCommonAncestor(root->left, p, q);   //traverse left 
-        TreeNode *r = lowestCommonAncestor(root->right, p, q);  // traverse right (BFS)
+        TreeNode *r = lowestCommonAncestor(root->right, p, q);  // traverse right 
         
         if(!l) return r ;                                        // if value doesnt match with p or q return NULL
         else if(!r) return l ;
