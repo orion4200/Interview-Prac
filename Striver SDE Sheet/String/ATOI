@@ -1,0 +1,31 @@
+class Solution {
+public:
+  int myAtoi(string s) {
+    int ans=0, n = s.length(), sign=1 ;
+
+    int i=0 ;
+    while(i < n && s[i] == ' ') i++ ;          //skipping whitespaces
+
+    if(s[i] == '-')                            // if - sign present then negative
+    {
+        sign = -1 ;
+        i++ ;
+    }
+    else if(s[i] == '+')                        // else positive
+        i++ ;                                   // incr i only if + or - present
+    
+
+    while(i < n && s[i]<58 && s[i]>47)                  // s[i] should be in ascii range of 48 to 57
+    {
+        int digit = s[i]-'0' ;
+        
+        //check overflow
+        if(ans > INT_MAX/10 || (ans == INT_MAX/10 && digit > INT_MAX%10))     // if ans becomes > than intmax or digit to be added is greater than last digit of intmax and ans is equal to intmax then return intmax
+            return (sign > 0)?INT_MAX:INT_MIN;                                // return intmin or intmax as per sign variable
+
+        ans = ans*10 + digit ;
+        i++ ;
+    }
+    return ans*sign ;
+  }
+};
