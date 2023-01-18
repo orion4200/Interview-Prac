@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int n = s.length() ;
+        int i = 0 ;
+        string res = "" ;
+
+        while(i < n && s[i] == ' ') i++ ;             //skip whitespaces
+
+        while(i < n)
+        {
+            string s1 = "" ;                          // store each word
+            while(i < n && s[i] != ' ')               
+            {
+                s1 += s[i] ;
+                i++ ;
+            }
+            i++ ;                                     //incr i as i is on a whitespace
+
+            if(s1.length() == 0) continue ;           // if s1 doesnt contain anything then it means it was a whitespace so dont append s1 to res
+
+            s1 = " " + s1 ;                           // append a space to beginning of the word
+            res = s1 + res ;                          // append s1 to res in reverse
+        }
+        res.erase(res.begin()) ;                      // delete the space added at the beginning of the first word
+        
+        return res ;
+    }
+};
