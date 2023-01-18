@@ -1,0 +1,20 @@
+class Solution {
+public:
+    TreeNode* solve(vector<int>& v, int& i, int n, int mx)
+    {
+        if(i == n || v[i] >= mx)                        // if we reach vector end or if value of v[i] is more than the upper bound
+            return NULL ;
+
+        TreeNode *root = new TreeNode(v[i]) ;           // make a new node and incr i 
+        i++ ;
+
+        root->left = solve(v, i, n, root->val) ;            // for left upper bound is the root val itself, since left of a node should always have val less than the node
+        root->right = solve(v, i, n, mx) ;                // for right, upper bound is same sa that of its parent node's val or the same upper bound as that of the current node
+
+        return root ;
+    }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        int i = 0 ;                                               
+        return solve(preorder, i, preorder.size(), INT_MAX) ;         //solve(preorder, iterator, size, upper bound)
+    }
+};
