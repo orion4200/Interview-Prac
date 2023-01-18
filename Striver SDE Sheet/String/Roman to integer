@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int romanToInt(string str) {
+         //char roman[] = {'I', 'V', 'X', 'L', 'C','D', 'M'};
+        int num=0 ;
+        map<char, int> mp ;                                           //create map for each symbol in roman notation
+        mp['I'] = 1 ;
+        mp['V'] = 5 ;
+        mp['X'] = 10 ;
+        mp['L'] = 50 ;
+        mp['C'] = 100 ;
+        mp['D'] = 500 ;
+        mp['M'] = 1000 ;
+        
+        if(str.length() == 1)                         //if length 1, then simply return
+        {
+            return mp[str[0]] ;
+        }
+        else
+        {
+            int i ;
+            for(i=0; i<str.length()-1; i++)                           //run loop till size()-2
+            {
+                char c = str[i] ;
+                
+                if(mp[str[i]] < mp[str[i+1]])                   // if symbol value is less than next symbol value, add difference of s[i] & s[i+1] to num and incr i(i is again incr in for loop so we move i 2 steps)
+                {num += mp[str[i+1]] - mp[str[i]] ; i++;}
+                else
+                    num += mp[c] ;                            // else simply add the symbol value to num
+            }
+            
+            if(i == str.size()-1)
+                num += mp[str[i]] ;                             // add the last remaining symbol value(since we ran above loop till size-2)
+            
+        }
+        return num ;
+    }
+};
