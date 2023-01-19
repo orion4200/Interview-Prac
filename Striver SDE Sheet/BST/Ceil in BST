@@ -1,0 +1,21 @@
+Logic -> same as inorder successor of a node in bst
+
+int findCeil(Node* root, int input) {
+    if (root == NULL) return -1;
+
+    int c = 0 ;
+    Node *p = root ;
+    
+    while(p)
+    {
+        if(p->data < input)
+            p = p->right ;
+        else 
+        {
+            c = p->data ;
+            p = p->left ;
+        }
+        
+    }
+    return c ;
+}
