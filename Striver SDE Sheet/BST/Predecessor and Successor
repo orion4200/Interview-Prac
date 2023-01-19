@@ -1,0 +1,36 @@
+logic -> for successor-: (inorder succ of a node in bst is the immediate next greater node in the bst, if node itself greatest then succ is NULL)
+      -> if root val <= key then move right
+      -> if root val > key - could be a possible suc hence update suc and move to left(we want node value between this root val and the key)
+      
+      -> for predecessor-: (inorder pred of a node in bst is the immediate next smaller node in the bst, if node itself smallest then succ is NULL)
+      -> if root val >= key then move left
+      -> if root val < key - could be a possible pred hence update suc and move to right(we want node value between this root val and the key)
+
+
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+{
+    pre = NULL ; suc = NULL ;
+    
+    Node *p = root ;
+    while(p != NULL)
+    {
+        if(p->key <= key)
+            p = p->right ;
+        else if(p->key > key)
+        {
+            suc = p ;
+            p = p->left ;
+        }
+    }
+    p = root ;
+    while(p != NULL)
+    {
+        if(p->key >= key)
+            p = p->left ;
+        else if(p->key < key)
+        {
+            pre = p ;
+            p = p->right ;
+        }
+    }
+}
