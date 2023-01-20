@@ -1,0 +1,34 @@
+class Solution
+{
+    public:
+    void inorder(Node* root, int& n)                        //inorder traveresal to count number of nodes
+    {
+        if(root)
+        {
+            inorder(root->left, n) ;
+            n++ ;
+            inorder(root->right, n) ;
+        }
+    
+    }
+    void inord(Node* root, int& k, int& ans)                      // inorder traversal till (n-K+1) is 0 - we are finding (n-K+1) smallest el i.e. Kth largest el
+    { 
+        if(!root) return ;
+        
+        inord(root->left, k, ans) ;
+        if(--k == 0)
+        {
+            ans = root->data ;
+            return ;
+        }
+        inord(root->right, k, ans);
+    }
+    int kthLargest(Node *root, int K)
+    {
+        int n=0, ans=0 ;          
+        inorder(root, n) ;                            //n is no. of nodes 
+        int k = n-K+1 ;                               // Kth largest is same as (n-K+1) smallest
+        inord(root, k, ans) ;
+        return ans ;
+    }
+};
