@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void inorder(TreeNode* root, vector<int>& v)
+    {
+        if(root)
+        {
+            inorder(root->left, v) ;
+            v.push_back(root->val) ;
+            inorder(root->right, v) ;
+        }
+    }
+    bool findTarget(TreeNode* root, int k) {
+        vector<int> in ;
+        inorder(root, in) ;                     // inorder traversal gives sorted array
+        int i=0, j=in.size()-1 ;
+
+        while(i<j)                                    // then apply normal 2 sum logic
+        { 
+            int sum = in[i]+in[j] ;
+            if(sum < k)
+                i++ ;
+            else if(sum > k)
+                j-- ;
+            else
+                return 1 ;
+        }
+
+        return 0 ;
+    }
+};
