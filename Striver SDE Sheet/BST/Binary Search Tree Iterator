@@ -1,0 +1,92 @@
+Method 1 -> find inorder successor, if it exists then return true for hasNext() otherwise return false
+         -> r always points to root, p points to current node, np is a temp node for tarversing
+         -> p initially points to a node with val -1
+         -> find inorder successor of p and make p point to its successor
+         
+Method 2 -> initialize an iterator i and p always points to root
+         -> perform inorder traversal and store in vector
+         -> return inorder[i] for next() and increment i 
+         -> if i reaches inorder.size() then return false else return true
+
+
+class BSTIterator {
+public:
+    TreeNode *r ;
+    TreeNode *p = new TreeNode(-1) ;
+
+    BSTIterator(TreeNode* root) {
+        
+        r = root ;
+    }
+  
+    int next() {
+        TreeNode *np = r, *suc=NULL ;
+        while(np)                               //inorder successor
+        {
+            if(np->val <= p->val)
+                np = np->right ;
+            else
+            {
+                suc = np ;
+                np = np->left ;
+            }
+        }
+        p = suc ;                           //update p
+        return suc->val ;
+    }
+    
+    bool hasNext() {
+        TreeNode *np = r, *suc=NULL ;
+        while(np)                                     //inorder successor
+        {
+            if(np->val <= p->val)
+                np = np->right ;
+            else
+            {
+                suc = np ;
+                np = np->left ;
+            }
+        }
+        if(suc != NULL)                                   //if succ exists
+            return 1 ;
+        return 0 ;
+    }
+};
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class BSTIterator {
+public:
+    TreeNode *p ;
+    vector<int> in ;
+    int i = 0 ;
+
+    BSTIterator(TreeNode* root) {
+        inorder(root, in) ;
+        p = root ;
+    }
+    
+    void inorder(TreeNode* root, vector<int>& v)
+    {
+        if(root)
+        {
+            inorder(root->left, v);
+            v.push_back(root->val) ;
+            inorder(root->right, v) ;
+        }
+    }
+    int next() {
+        if(i >= in.size())
+            return -1 ; 
+
+        return in[i++] ;
+    }
+    
+    bool hasNext() {
+        if(i < in.size())
+            return 1 ;
+        return 0 ;
+    }
+};
