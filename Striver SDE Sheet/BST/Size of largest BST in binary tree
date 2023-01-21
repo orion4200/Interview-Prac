@@ -1,0 +1,25 @@
+ds -> pair(size of BST, pair(max val in left subtree, min val in right subtree))
+-> start from bottom(i.e. we use postorder traversal)
+-> if max val of left subtree < root->val and min val of right subtree > root->val then it is a bst
+-> if above condn not true, then return pair(max of size of either Lsubtree or Rsubtree, pair(Intmin, intmax)) 
+-> size of bst = size of left subtree + " " of right subtree + 1 (for node itself)
+
+
+pair<int, pair<int, int>> solve(TreeNode<int> *root)
+    {
+        if(!root) return make_pair(0, make_pair(INT_MAX, INT_MIN)) ;        // returning (intmin , intmax) so that while comparing with node val, we obtain node val -> max(Intmin, root->val) = root->val,,,,, similarly min(Intmax, root->val) = root->val
+
+        auto l = solve(root->left) ;                                // postorder traversal
+        auto r = solve(root->right) ;
+
+        if(l.second.second < root->data && r.second.first > root->data)             //check for BST
+            return make_pair(l.first + r.first + 1, make_pair(
+                min(l.second.first, root->data) , max(r.second.second, root->data)));
+        
+        return make_pair(max(l.first, r.first), make_pair(INT_MIN, INT_MAX)) ;
+}
+int largestBST(TreeNode<int>* root) 
+{
+    auto a = solve(root) ;
+        return a.first ;
+}
