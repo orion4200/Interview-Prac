@@ -1,0 +1,86 @@
+// perform lvl order traversal and keep adding node values to string res with ',' being the separator and for NULL add '#'
+// to deserialize, again use a queue and add the root node. Pop the front element and read from string for left child - 
+    if it is '#', then make node->left = NULL
+    again read from string for right child and if it isnt '#', then make new node and make node->right point to this newly created node
+    push both childs into queue again
+
+
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string res = "" ;
+        if(!root) return res ;
+
+        queue<TreeNode*> q ;
+
+        q.push(root) ;
+        while(!q.empty())
+        {
+            auto p = q.front() ;
+            q.pop() ;
+
+            if(p)
+            {
+                string temp = to_string(p->val) ; temp += "," ;                   //add node val and ',' to string
+                res += temp ;
+ 
+                q.push(p->left) ;                                         //push left and right child
+                q.push(p->right) ;
+            }
+            else
+            {
+                string c = "#," ;                                       // if null add '#' to string and a ','
+                res += c ;    
+            }
+        }
+        //cout<<res<<endl ;
+        return res ;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if(data.length() == 0) return NULL ;
+        stringstream str(data) ;                          // converts string into datastream from which we can read data in a continuous fashion
+
+        string s ;
+        getline(str, s, ',') ;                          // read a string s from datastream str with deliminator ','
+
+        queue<TreeNode*> q ;
+
+        TreeNode* root = new TreeNode(stoi(s)) ;          //convert string to integer using stoi
+        q.push(root) ;
+
+        while(!q.empty())
+        {
+            auto p = q.front() ;
+            q.pop() ;
+
+            getline(str, s, ',') ;                      //read for lchild
+
+            if(s != "#")                              // if not null, then create a new node and point p-.left to this new node
+            {
+                TreeNode* l = new TreeNode(stoi(s)) ;
+                p->left = l ;
+                q.push(l) ;
+            }
+            else
+            {
+                p->left = NULL ;                            // else if '#' is read, p->left = NULL
+            }
+
+            getline(str, s, ',') ;                    // read for rchild
+
+            if(s != "#")
+            {
+                TreeNode* r = new TreeNode(stoi(s)) ;
+                p->right = r ;
+                q.push(r) ;
+            }
+            else
+                p->right = NULL ;
+        }
+        return root ;
+    }
+};
