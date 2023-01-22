@@ -1,0 +1,77 @@
+class Solution {
+public:
+    int compareVersion(string version1, string version2) {
+        //int n1 = version1.length(), n2 = version2.length() ;
+        stringstream s1(version1) ;                             //convert both strings into stream
+        stringstream s2(version2) ;
+
+        int ans=0 ;
+
+        while(!s1.eof() || !s2.eof())                           // while not reached end of stream of s1 or s2
+        {
+            string t1, t2 ; 
+            
+            if(!s1.eof())
+                getline(s1, t1, '.') ;                    // get string with deliminator '.'
+            else
+                t1 = "0" ;                                    // if eof, then set it to "0"
+
+            if(!s2.eof())
+                getline(s2, t2, '.') ;
+            else
+                t2 = "0" ;
+            
+            //cout<<t1<<' '<<t2<<endl ;
+
+            int x1 = stoi(t1) ; int x2 = stoi(t2) ;             // convert strings to int
+
+            if(x1 == x2) continue ;                     // compare the integers
+            else if(x1 < x2)
+            {
+                ans = -1 ;
+                break ;
+            }
+            else
+            {
+                ans = 1 ;
+                break ;
+            }
+        }
+        return ans ;
+    }
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+public:
+    int compareVersion(string version1, string version2) {
+        int i = 0, j = 0, n1 = version1.size(), n2 = version2.size(), num1 = 0, num2 = 0; 
+        while(i < n1 || j < n2)
+        {
+            while(i<n1 && version1[i] != '.')
+            {
+                num1 = num1 * 10 + (version1[i]-'0');                             // calculate each versions
+                i++;
+            }
+            while(j<n2 && version2[j] != '.')
+            {
+                num2 = num2*10+(version2[j]-'0');
+                j++;
+            }
+            if(num1 > num2)                                     //compare the versions
+            {
+                return 1;
+            }
+            if(num1 < num2) 
+            {
+                return -1;
+            }
+            i++;                                    // incr so that we cross the '.'
+            j++;
+            num1 = 0;                             // reset num1 and num2 for next version
+            num2 = 0;
+        }
+        return 0; 
+    }
