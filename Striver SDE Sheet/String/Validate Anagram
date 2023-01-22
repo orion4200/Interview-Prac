@@ -1,0 +1,54 @@
+class Solution {
+public:
+    bool isAnagram(string a, string b) {
+        int s[26] = {0} ; 
+        int i=0 ;
+
+        if(a.length() != b.length())            //if length not same, then not anagram
+            return 0 ;
+
+        for(i=0 ;i<a.length(); i++)
+        {
+            s[a[i] - 'a']++ ;                 //incr index = char in string a
+            s[b[i] - 'a']-- ;                 // decr index = char in string b
+        }
+
+        for(i=0; i<26; i++)
+        {
+            if(s[i] != 0) return 0;         //if all indexes' values are not 0, then not anagram
+        }
+        return 1 ;
+    }
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+class Solution {
+public:
+    bool isAnagram(string a, string b) {
+        unordered_map<char, int> mp;
+        
+        if(a.length() != b.length())
+            return 0 ;
+        
+        for(char c:a)
+            mp[c]++ ;
+            
+        for(char c:b)
+        {
+            if(!mp[c]) return 0 ;
+            
+            mp[c]-- ;
+            
+            if(mp[c] == 0)
+                mp.erase(c) ;
+        }
+        
+        if(mp.size() == 0)
+            return 1 ;
+        
+        return 0 ; 
+    }
+};
