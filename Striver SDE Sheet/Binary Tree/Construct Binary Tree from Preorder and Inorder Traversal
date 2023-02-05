@@ -1,0 +1,39 @@
+
+-> preorder[0] is root of tree and all other values in preorder vector are roots of subtrees
+-> in inorder vector, left side of root is left subtree and right side is right subtree
+-> we pass left = 0, right = inorder/preorder.size()-1 initially and rootind = 0 (which keeps on incr by 1)
+
+
+class Solution {
+public:
+    int rootind = 0 ;                                                                           //index of root
+    TreeNode* solve(vector<int> p, vector<int> i, int left, int right)
+    {
+        if(left > right)                                                                //base case
+            return NULL ;
+
+        TreeNode *root = new TreeNode(p[rootind]) ;                                 // we create node (i.e. root for each subtree) with rootind in preorder vector
+
+        int ind = 0;                                                          // finding node(root) in inorder vector
+        for(int j=left; j<=right; j++)
+        {
+            if(i[j] == p[rootind])
+            {
+                ind = j ;
+                break ;
+            }
+        }
+        rootind++ ;                                                        // incr rootind
+
+        root->left = solve(p, i, left, ind-1) ;                           // left subtree -> left side of created node(root for this subtree)
+        root->right = solve(p, i, ind+1, right) ;                         // right subtree -> right side of created node(root for this subtree)
+
+        return root ;
+
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n = preorder.size()-1 ;
+        TreeNode* root = solve(preorder, inorder, 0, n) ;
+        return root ;
+    }
+};
