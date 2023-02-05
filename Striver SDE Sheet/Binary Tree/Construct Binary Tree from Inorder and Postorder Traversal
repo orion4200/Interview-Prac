@@ -1,0 +1,32 @@
+-> same logic as constructing BT from inorder and preorder, except here rootind will run from n-1 to 0 (since postorder[n-1] is the root of the tree
+and consecutive elements postorder[n-2], postorder[n-3].... are the roots of subtrees)
+-> we will construct right left root here 
+
+class Solution {
+public:
+    map<int, int> mp ;
+    TreeNode* solve(vector<int>& p, vector<int>& i, int& rootind, int left, int right)
+    {
+        if(left > right)
+            return NULL ;
+
+        TreeNode* root = new TreeNode(p[rootind--]) ;
+
+        int ind = mp[root->val] ;
+
+        root->right = solve(p, i, rootind, ind+1, right) ;
+        root->left = solve(p, i, rootind, left, ind-1) ;
+
+        return root ;
+
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n = inorder.size()-1 ;
+        int rootind = n ;
+
+        for(int i=0; i<=n; i++)
+            mp[inorder[i]] = i ;
+
+        return solve(postorder, inorder, rootind, 0, n) ;
+    }
+};
