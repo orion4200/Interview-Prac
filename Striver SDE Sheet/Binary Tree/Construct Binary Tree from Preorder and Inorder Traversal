@@ -6,6 +6,7 @@
 
 class Solution {
 public:
+    map<int, int> mp ;
     int rootind = 0 ;                                                                           //index of root
     TreeNode* solve(vector<int> p, vector<int> i, int left, int right)
     {
@@ -14,15 +15,8 @@ public:
 
         TreeNode *root = new TreeNode(p[rootind]) ;                                 // we create node (i.e. root for each subtree) with rootind in preorder vector
 
-        int ind = 0;                                                          // finding node(root) in inorder vector
-        for(int j=left; j<=right; j++)
-        {
-            if(i[j] == p[rootind])
-            {
-                ind = j ;
-                break ;
-            }
-        }
+        int ind = mp[root->val];                                                   // finding node(root) index in inorder vector
+        
         rootind++ ;                                                        // incr rootind
 
         root->left = solve(p, i, left, ind-1) ;                           // left subtree -> left side of created node(root for this subtree)
@@ -33,6 +27,10 @@ public:
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         int n = preorder.size()-1 ;
+        
+        for(int i=0; i<=n; i++)                                             // i<=n since n is already defined as = size-1
+            mp[inorder[i]] = i ;
+            
         TreeNode* root = solve(preorder, inorder, 0, n) ;
         return root ;
     }
