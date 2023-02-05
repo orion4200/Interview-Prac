@@ -1,33 +1,25 @@
 class Solution {
 public:
-int maxSum(TreeNode* root, int& ans) {
-    /* This function return the Branch Sum......
-    So if the node is NULL then it won't have a branch....so the branch sum will be 0.
-    */
-    //Base Case
-    if(root == NULL){
-        return 0;
+    int solve(TreeNode* root, int& ans)
+    {
+        if(root == NULL)                                                   // NULL return 0 path sum
+            return 0 ;
+        
+        int l=0, r=0 ;                                                      // left and right subtree path sum
+        l = solve(root->left, ans)  ;
+        r = solve(root->right, ans) ;
+
+        ans = max({ans, l+root->val, r+root->val, l+r+root->val, root->val}) ;      // max path sum = either max path sum from left subtree, or max path sum from
+                                                                                        right subtree, the node itself(path can contain 1 single node), path sum including
+                                                                                        left subtree path sum + right subtree path sum and node val
+
+        return max(l, r) + root->val ;                                              // return max of left or right subtree path sum + node val
+        
     }
-    
-    //Recursive Case 
-    //BS = Branch Sum
-    int leftBS = root->val + maxSum( root->left , ans );
-    int rightBS = root->val + maxSum( root->right , ans );
-    
-    ans = max({
-                ans,           
-                root->val,      
-                leftBS,         
-                rightBS,       
-                leftBS + rightBS - root->val   
-            });
-    
-    //Return the max branch Sum
-    return max({ leftBS , rightBS , root->val });
-}
     int maxPathSum(TreeNode* root) {
-        int ans = INT_MIN;
-    maxSum(root, ans);
-    return ans;
+        int ans=INT_MIN; 
+        solve(root, ans) ;
+
+        return ans ;
     }
 };
