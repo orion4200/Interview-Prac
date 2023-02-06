@@ -1,0 +1,61 @@
+class Solution {
+public:
+    bool solve(TreeNode *l, TreeNode* r)
+    {
+        if(l == NULL && r == NULL)                                  // if both nodes NULL, then symmetric
+            return 1 ;
+
+        if(l == NULL || r == NULL)                                  // if either NULL, non symmetric
+            return 0 ;
+        
+        if(l->val != r->val)                            // condn for non symmetricity
+            return 0 ;
+
+        return solve(l->left, r->right) && solve(l->right, r->left) ;               //recursively check for left and right subtree
+    }
+    bool isSymmetric(TreeNode* root) {
+        return solve(root->left, root->right) ;
+    }
+            
+};
+
+
+
+///////////////////////// iterative soln///////////////////////////////////////////
+class Solution {
+public:
+    bool isSymmetric(TreeNode *root) {
+        TreeNode *left, *right;
+        if (!root)                                  // NULL root is symmetric
+            return true;
+        
+        queue<TreeNode*> q1, q2;                        //q1 for left subtree, q2 for right subtree
+        q1.push(root->left);
+        q2.push(root->right);
+        
+        while (!q1.empty() && !q2.empty()){
+        
+            left = q1.front();                        // pop front from both queues
+            q1.pop();
+            
+            right = q2.front();
+            q2.pop();
+            
+            if (NULL == left && NULL == right)              // if both nodes NULL, then symmetric
+                continue;
+                
+            if (NULL == left || NULL == right)            // if either NULL, non symmetric
+                return false;
+                
+            if (left->val != right->val)                    // condn for non symmetricity
+                return false;
+                
+            q1.push(left->left);
+            q1.push(left->right);
+            
+            q2.push(right->right);
+            q2.push(right->left);
+        }
+        return true;
+    }
+};
