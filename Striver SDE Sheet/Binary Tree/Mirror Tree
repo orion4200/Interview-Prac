@@ -1,0 +1,47 @@
+////////////////////////////////////////////////////////////////// recursive soln /////////////////////////////////////////////////////////////////////////
+
+class Solution {
+  public:
+    // Function to convert a binary tree into its mirror tree.
+    
+    void mirror(Node* node) {
+        if(node == NULL)
+            return ;
+            
+        swap(node->left, node->right) ;                           // swap left and right nodes
+        
+        mirror(node->left) ;
+        mirror(node->right) ;
+        
+    }
+};
+
+
+////////////////////////////////////////////////////// iterative soln /////////////////////////////////////////////////////////////////////////////////
+
+void mirror(Node* node) {
+
+      if(node==NULL)
+        return ;
+
+      queue<Node *> q;
+      q.push(node);
+
+      while(!q.empty())                                           // level order traversal
+
+      {
+          Node *curr=q.front();
+
+          q.pop();
+
+          swap(curr->left,curr->right);                           // swap left and right nodes
+
+          if(curr->left)
+              q.push(curr->left);
+
+          if(curr->right!=NULL)
+              q.push(curr->right);
+
+          
+      }
+    }
