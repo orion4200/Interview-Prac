@@ -1,0 +1,27 @@
+class Solution{
+public:
+    vector<int> leftSmaller(int n, int a[]){
+        stack<int> st ;
+        vector<int> res ;
+        
+        for(int i=0; i<n; i++)
+        {
+            while(!st.empty() && a[i] <= st.top())                        // while a[i] is less than st.top
+            {
+                st.pop() ;
+            }
+            
+            if(st.empty())                                // if no el in stack is less than a[i], then push -1 and continue
+            {
+                res.push_back(-1) ;
+                st.push(a[i]) ;
+                continue ;
+            }
+            
+            res.push_back(st.top()) ;                           // else push the top el 
+            st.push(a[i]) ;                                         // push array el into stack
+        }
+        
+        return res ;
+    }
+};
