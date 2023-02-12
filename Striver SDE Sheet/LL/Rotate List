@@ -1,0 +1,33 @@
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(!head)
+            return NULL ;
+            
+        ListNode *np = head, *t = NULL ;
+
+        int size=0 ;                                // size of LL
+
+        while(np)                                       // calc size of LL
+        {
+            if(np->next == NULL)                    // t points to last node
+                t = np ;
+
+            np = np->next ;
+            size++ ;     
+        }
+
+        int r = k%size ; int n = size-r ;                 // no. of actual rotations = k%size,  parameter n = size - r
+        t->next = head ;                                  // last node's next modified to point to head instead of NULL 
+
+        np = head ;
+
+        while(--n)
+            np = np->next ;                           // np points to size-r th node
+
+        ListNode *res = np->next ;                          // res points to node next to res i.e. the head of rotated LL
+        np->next = NULL ;                                   // make np's next point to NULL
+
+        return res ;
+    }
+};
