@@ -42,7 +42,9 @@ public:
     Node* copyRandomList(Node* head) {
 
         Node *p = head ;
-
+          
+          ///step - 1
+          
         while(p)
         {
             Node *temp = new Node(p->val) ;
@@ -52,7 +54,9 @@ public:
         }
 
         p = head ;
-
+            
+            /// step - 2
+            
         while(p)
         {
             if(p->random != NULL)
