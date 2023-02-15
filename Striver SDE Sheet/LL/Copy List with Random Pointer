@@ -1,4 +1,8 @@
-logic -> 
+logic -> create hashmap and create and add copy of each node(only val)
+      -> traverse list again and modify random and next pointer of the copied node in the hashmap
+      -> mp[p]->next = mp[p->next]                              // mp[p] denotes copy of node p
+      -> mp[p]->random = mp[p->random]
+      
 
 class Solution {
 public:
@@ -23,5 +27,54 @@ public:
         }
 
         return mp[head] ;
+    }
+};
+
+
+
+///////////////////////////////////////////////////// o(1) space /////////////////////////////////////////////////////////////////////////////
+
+logic -> refer notebook
+
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+
+        Node *p = head ;
+
+        while(p)
+        {
+            Node *temp = new Node(p->val) ;
+            temp->next = p->next ;
+            p->next = temp ;
+            p = p->next->next ;
+        }
+
+        p = head ;
+
+        while(p)
+        {
+            if(p->random != NULL)
+                p->next->random = p->random->next ;
+
+            p = p->next->next ;
+        }
+        p = head ;
+        Node *res = new Node(-1) ;
+        Node *np = res ;
+
+        while(p)
+        {
+            Node *front = p->next->next ;
+
+            np->next = p->next ;
+            np = np->next ;
+
+            p->next = front ;
+            p = front ;
+        }
+
+        return res->next ;
     }
 };
