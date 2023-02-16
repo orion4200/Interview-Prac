@@ -9,6 +9,7 @@ public:
     {
         int it1 = i, it2 = j ;
 
+        // to check on left row
         while(it2 >= 0)
         {
             if(s[it1][it2] == 'Q')
@@ -17,6 +18,7 @@ public:
         }
         it1 = i ; it2 = j ;
 
+        // to check in upper diagonal
         while(it1 >= 0 && it2 >= 0)
         {
             if(s[it1][it2] == 'Q')
@@ -26,7 +28,8 @@ public:
         }
 
         it1 = i ; it2 = j ;
-
+    
+        //to check in lower diagonal
         while(it1 < n && it2 >= 0)
         {
             if(s[it1][it2] == 'Q')
@@ -47,11 +50,11 @@ public:
         //int cur_pos = 0 ;
         for(int i=0; i<n; i++)
         {
-            if(isqueen(i,j, s, n))
+            if(isqueen(i,j, s, n))                                              // i-row, j-column
             {
                 s[i][j] = 'Q' ;
                 solve(j+1, n, s, v) ;
-                s[i][j] = '.' ;
+                s[i][j] = '.' ;                             // while backtracking remove the Q
             }        
         }
     }
@@ -107,7 +110,7 @@ public:
         {
             cur.push_back(temp) ;
         }
-        vector<int> leftr (n, 0); vector<int>ud (2*n-1, 0); vector<int>ld (2*n-1, 0);
+        vector<int> leftr (n, 0); vector<int>ud (2*n-1, 0); vector<int>ld (2*n-1, 0);       //3 hash tables to keep track of Q in left side, upper and lower diagonal (initialised with 0)
         solve(0, n, cur, res, leftr, ud, ld) ;
         return res ;
 
