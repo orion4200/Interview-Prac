@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool isvalid(vector<vector<char>> b, int i, int j, char c)
+    {
+        for(int k=0; k<9; k++)
+        {
+            if(b[i][k] == c)
+                return false ;
+            
+            if(b[k][j] == c)
+                return false ;
+
+            if(b[3*(i/3) + k/3][3*(j/3) + k%3] == c)
+                return false ;
+        }
+        return true ;
+    }
+    bool solve( vector<vector<char>>& b, int i, int j)
+    {
+        if(i == 9)
+            return 1 ;
+        if(j == 9)
+            return solve(b, i+1, 0) ;
+
+        if(b[i][j] != '.')
+            return solve(b, i, j+1) ;
+        
+                
+        for(char k='1'; k<='9'; k++)
+        {
+            if(isvalid(b, i, j, k))
+            {
+                b[i][j] = k ;
+                if(solve(b, i, j+1))
+                    return true ;
+                else
+                    b[i][j] = '.' ;
+            }
+        }
+        return false ;
+    }
+    void solveSudoku(vector<vector<char>>& board) {
+        solve(board, 0, 0) ;
+    }
+};
