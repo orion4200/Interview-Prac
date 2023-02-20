@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        int n = grid.size() ;
+        int m = grid[0].size() ;
+        queue<pair<pair<int, int>, int>> q ;              // {{row, col}, level/time}
+        int temp[] = {-1, 0, 1, 0, -1} ;                  // (i-1, j+0) , (i+0, j+1), (i+1, j+0), (i+0, j-1)....to check the 4 neighbouring cells
+
+        int vis[n][m] ;
+        int ans=0, fresh=0 ;
+
+        for(int i=0; i<n; i++)                        // find initially rotten oranges and push them in queue and also mark them visited
+        {
+            for(int j=0; j<m; j++)
+            {
+                if(grid[i][j] == 2)
+                {
+                    q.push(make_pair(make_pair(i,j), 0)) ;
+                    vis[i][j] = 1 ;
+                    continue ;
+                }
+                else if(grid[i][j] == 1)
+                    fresh++ ;                               // count fresh oranges
+
+                vis[i][j] = 0 ; 
+            }
+        }
+
+        while(!q.empty())
+        {
+            auto ora = q.front() ;
+            q.pop() ;
+
+            int r = ora.first.first, c = ora.first.second, t = ora.second ;
+            ans = t ;
+
+            for(int i=0; i<4; i++)                                      // to check all 4 neighbours
+            {
+                int new_r = r+temp[i] ;
+                int new_c = c+temp[i+1] ;
+
+                if((new_r<n && new_r>=0) && (new_c<m && new_c>=0) && grid[new_r][new_c] == 1
+                    && vis[new_r][new_c] == 0)                                                              // orange should be fresh and not visited 
+                {
+                    q.push(make_pair(make_pair(new_r, new_c), t+1)) ;                     // push into queue with time +1 
+                    vis[new_r][new_c] = 1 ;                         // mark visited
+                    fresh-- ;                                             // decr fresh orange count
+                }
+            }
+            
+        }
+        if(fresh > 0)
+            return -1 ;
+
+        return ans ;
+
+    }
+};
