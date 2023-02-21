@@ -1,3 +1,5 @@
+////////////////////////////////////// using BFS ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class Solution {
   public:
     bool detect(vector<int> adj[], vector<int>& vis, int start)
@@ -31,7 +33,7 @@ class Solution {
     bool isCycle(int V, vector<int> adj[]) {
         vector<int> vis(V, 0) ;                             // visited array
         
-        for(int i=0; i<V; i++)                              // we run loop for the case of unconnected graphs
+        for(int i=0; i<V; i++)                              // we run loop for the case of unconnected graphs with mutliple components
         {
             if(vis[i] == 0)
             {
@@ -40,5 +42,44 @@ class Solution {
             }
         }
         return false ;
+    }
+};
+
+
+/////////////////////////////////////////////////////////// uaing DFS ////////////////////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+  public:
+    bool dfs(vector<int>& vis, vector<int> adj[], int parent, int node)
+    {
+        vis[node] = 1 ;
+        
+        for(int i:adj[node])
+        {
+            if(vis[i] == 0)
+            {
+                if(dfs(vis, adj, node, i))                                // if dfs for that node call returns true, then it should keep returning true 
+                    return true ;
+            }
+            else if(i != parent)                                          // if the node connected to np is visited and not its parent, then graph has a cycle
+                return true ;
+        }
+        
+        return false ;
+    }
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        vector<int> vis(V, 0) ;
+        
+       for(int i=0; i<V; i++)                                       // we run loop for the case of unconnected graphs with mutliple components
+       {
+            if(vis[i] == 0)
+            {
+                if(dfs(vis, adj, -1, i))                            // if any 1 component of non connected graph has a cycle, the graph is said to have a cycle
+                    return true ;
+            }
+       }
+       
+       return false ;
     }
 };
