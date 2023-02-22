@@ -50,3 +50,56 @@ public:
         return cnt ;
     }
 };
+
+
+
+
+///////////////////////////////////////////////////////////////////// using dfs //////////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+public:
+    void dfs(vector<vector<char>>& grid, vector<vector<int>>& vis, int row, int col)                            // pass grid by reference, since passing by value creates new copy for each call of dfs and results in TLE
+    {
+        int n = grid.size() ;
+        int m = grid[0].size() ;
+
+        if(row<0 || row>=n || col<0 || col>=m)
+            return ;
+
+        if(grid[row][col] == '0' || vis[row][col] == 1)                                         // if visited or grid cell contains water 
+            return ;
+
+        vis[row][col] = 1 ;                                                 // mark visited
+
+        if(row-1 >=0)                                                                   //call dfs for all horizontal and vertical neighbours
+            dfs(grid, vis, row-1, col) ;
+        if(col+1 < m)
+            dfs(grid, vis, row, col+1) ;
+        if(row+1 < n)
+            dfs(grid, vis, row+1, col) ;
+        if(col-1 >= 0)
+            dfs(grid, vis, row, col-1) ;
+
+        return ;
+        
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int n = grid.size() ;
+        int m = grid[0].size() ;
+        vector<vector<int>> vis (n, vector<int>(m, 0)) ;
+        int cnt = 0 ;
+
+        for(int i=0; i<n; i++)
+        {
+            for(int j=0; j<m; j++)
+            {
+                if(vis[i][j] == 0 && grid[i][j] == '1')
+                {
+                    cnt++ ;
+                    dfs(grid, vis, i, j) ;
+                }
+            }
+        }
+        return cnt ;
+    }
+};
