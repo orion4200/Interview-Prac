@@ -1,0 +1,52 @@
+class Solution {
+public:
+    void bfs(vector<vector<char>> grid, vector<vector<int>>& vis, int row, int col)           // perform bfs traversal
+    {
+        int n = grid.size() ;
+        int m = grid[0].size() ;
+        int temp[] = {-1, 0, 1, 0, -1} ;
+
+        vis[row][col] = 1 ;                             // mark visited
+        queue<pair<int, int>> q ;                       // {row, col}
+        q.push(make_pair(row, col)) ;
+
+        while(!q.empty())
+        {
+            auto np = q.front() ; 
+            q.pop() ;
+
+            int r = np.first, c = np.second ;
+            for(int i=0; i<4; i++)
+            {
+                int new_r = r + temp[i] ;                                                                     //check horizontal and vertical neighbours
+                int new_c = c + temp[i+1] ;
+
+                if(new_r<n && new_r>=0 && new_c<m && new_c>=0 && vis[new_r][new_c] == 0                         // if in range and not visited and not '0'
+                    && grid[new_r][new_c] == '1')
+                {
+                    vis[new_r][new_c] = 1 ;
+                    q.push(make_pair(new_r, new_c)) ;
+                }   
+            }
+        }
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int n = grid.size() ;
+        int m = grid[0].size() ;
+        vector<vector<int>> vis (n, vector<int>(m, 0)) ;                                // visited array is 2D, since grid is 2D
+        int cnt = 0 ;
+
+        for(int i=0; i<n; i++)                                                                    
+        {
+            for(int j=0; j<m; j++)
+            {
+                if(vis[i][j] == 0 && grid[i][j] == '1')                                   // for each island, calling bfs on any one cell having '1', ensures that each cell of that island will be visited 
+                {
+                    cnt++ ;                                                   // incr cnt for each time we visit an island (group of neighbouring '1's)
+                    bfs(grid, vis, i, j) ;
+                }
+            }
+        }
+        return cnt ;
+    }
+};
