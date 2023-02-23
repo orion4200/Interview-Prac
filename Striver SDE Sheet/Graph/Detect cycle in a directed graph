@@ -1,0 +1,40 @@
+/////////////////////////////////////////////////////////////////////////// using DFS //////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+  public:
+    bool dfs(vector<int>& vis, vector<int>& path_vis, vector<int> adj[], int node)
+    {
+        vis[node] = 1 ;                                                                     // mark visited
+        path_vis[node] = 1 ;                                                                    // mark path visited
+        
+        for(int i:adj[node])
+        {
+            if(vis[i] == 0)
+            {
+                if(dfs(vis, path_vis, adj, i) == true)                                    // return true if we get true from future calls of dfs
+                    return true ;
+            }
+            else if(path_vis[i] == 1)                                                   // if node is visited and path visited both, then cycle exists
+                return true ;
+        }
+        
+        path_vis[node] = 0 ;                                                                  // demark path visited while backtracking (happens when cycle is not detected)
+        return false ;  
+    }
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        vector<int> vis(V, 0) ;
+        vector<int> path_vis(V, 0) ;
+        
+       for(int i=0; i<V; i++)                                       // we run loop for the case of unconnected graphs with mutliple components
+       {
+            if(vis[i] == 0)
+            {
+                if(dfs(vis, path_vis, adj, i))                            // if any 1 component of non connected graph has a cycle, the graph is said to have a cycle
+                    return true ;
+            }
+       }
+       
+       return false ;
+    }
+};
