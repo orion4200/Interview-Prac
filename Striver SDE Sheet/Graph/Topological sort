@@ -1,0 +1,1 @@
+topological ordering -> only in directed acyclic graph. in a DAG, if u is connected to v then u should come before v in the ordering
