@@ -55,3 +55,42 @@ public:
 
     }
 };
+
+
+///////////////////////////////////////////////////////////////// using DFS ////////////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+public:
+    bool dfs(vector<vector<int>>& graph, vector<int>& vis, int node, int color)
+    {
+        for(int it:graph[node])
+        {
+            if(vis[it] < 0)                                                         // if not visited
+            {
+                vis[it] = !color ;                                                      // mark it with color opposite to that of node
+                if(dfs(graph, vis, it, !color) == false)                               // if any dfs call returns false, then not bipartite
+                    return false ;
+            }
+            else if(vis[it] == color)                                                 // if color of node same as color of adjacent node, not bipartite
+                return false ;
+        }
+        return true ;
+    }
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size() ;
+        int m = graph[0].size() ;
+
+        vector<int> vis(n, -1) ;
+
+        for(int i=0; i<n; i++)                                    // for all non connected componenets of graph
+        {
+            if(vis[i] < 0)
+            {
+                vis[i] = 0 ;
+                if(dfs(graph, vis, i, 0) == false) 
+                    return false ;
+            }
+        }
+        return true ;
+    }
+};
