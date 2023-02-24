@@ -1,1 +1,42 @@
-topological ordering -> only in directed acyclic graph. in a DAG, if u is connected to v then u should come before v in the ordering
+topological ordering -> only in directed acyclic graph. in a DAG, if u is connected to v then u should come before v in the ordering. Stack is used for this.
+                     -> after dfs of a node is complete, we insert it into the stack while backtracing. The elements in stack from top to bottom is a valid topological order
+                     
+///////////////////////////////////////////////////////////////using dfs /////////////////////////////////////////////////////////////////////////////////////////////
+
+class Solution
+{
+	public:
+	void dfs(vector<int>& vis, vector<int> adj[], stack<int>& st, int node)
+	{
+	    vis[node] = 1 ;
+	    
+	    for(int i:adj[node])
+	    {
+	        if(!vis[i])
+	            dfs(vis, adj, st, i) ;
+	    }
+	    st.push(node) ;                                                         // push into stack only after that is explored(dfs for that node is complete)
+	}
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    vector<int> vis(V, 0) ;
+	    vector<int> t_sort ;
+	    stack<int> st ;
+	    
+	    for(int i=0; i<V; i++)
+	    {
+	        if(!vis[i])
+	            dfs(vis, adj, st, i) ;
+	    }
+	    while(!st.empty())
+	    {
+	        int t = st.top() ;
+	        t_sort.push_back(t) ;
+	        st.pop() ;
+	    }
+	    
+	    return t_sort ;
+	    
+	}
+};
