@@ -1,0 +1,3 @@
+bipartite graph -> if we take 2 colors and we are able to color all the nodes of the graph such that no two adjacent nodes are of same the color, then graph is bipartite
+                -> all linear graphs are bipartite
+                -> all cyclic graphs with even number of nodes in the cycle are cyclic (even cyclic length)
