@@ -1,3 +1,57 @@
 bipartite graph -> if we take 2 colors and we are able to color all the nodes of the graph such that no two adjacent nodes are of same the color, then graph is bipartite
                 -> all linear graphs are bipartite
                 -> all cyclic graphs with even number of nodes in the cycle are cyclic (even cyclic length)
+
+
+////////////////////////////////////////////////////////////////// using BFS ///////////////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+public:
+    bool bfs(vector<vector<int>>& graph, vector<int>& vis, queue<int>& q)
+    {
+        int n = graph.size() ;
+        int m = graph[0].size() ;
+
+        while(!q.empty())
+        {
+            int node = q.front() ;
+            q.pop() ;
+
+            int color = vis[node] ;                             // color of node 
+            for(int it:graph[node])
+            {
+                if(vis[it] < 0)
+                {
+                    vis[it] = !color ;                                    // adjacent nodes of the node should be of color opposite to that of node color
+                    q.push(it) ;
+                }
+                else if(vis[it] == color)                               // if adjacent node is already visited (since it isnt -1), and of same color, then not bipartite
+                    return false ;
+            }
+        }
+        return true ;
+    }
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size() ;
+        int m = graph[0].size() ;
+
+        vector<int> vis(n, -1) ;
+
+        queue<int> q ;
+
+        for(int i=0; i<n; i++)                                      // if graph has more than 1 non connected components
+        {
+            if(vis[i] < 0)
+            {
+                q.push(i) ;
+                vis[i] == 0 ;
+
+                if(bfs(graph, vis, q) == false)
+                    return false ;
+            }     
+        }
+
+        return true ;
+
+    }
+};
