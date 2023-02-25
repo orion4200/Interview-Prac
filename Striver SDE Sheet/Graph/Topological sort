@@ -40,3 +40,58 @@ class Solution
 	    
 	}
 };
+
+
+
+///////////////////////////////////////////////////////////////////////// using BFS (Kahn's Algo) ///////////////////////////////////////////////////////////////
+
+indegree vector -> to store indegree of each node
+
+the graph will have a node with indeg = 0, we first insert that node in queue. 
+we then pop el from queue and push into res vector. we check its adjacent nodes and reduce their indeg by 1. 
+if indeg of any adjacent node becomes 0, then we insert it into the queue. 
+
+class Solution
+{
+	public:
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    vector<int> indeg(V, 0) ;						//indeg of all nodes
+	    //vector<int> vis(V, 0) ;
+	    int n = adj[0].size() ;
+	    queue<int> q ;
+	    
+	    for(int i=0; i<V; i++)
+	    {
+	        for(int j:adj[i])
+	        {
+	            indeg[j]++ ;						// the nodes present in adj[i] means the connections are towards them, so we use indeg[j]++
+	        }
+	    }
+	    
+	    vector<int> res ;
+	    
+	    for(int i=0; i<V; i++)
+	    {
+	        if(indeg[i] == 0)
+	            q.push(i) ;						// push nodes with indeg=0 into the queue first
+	    }
+	    
+	    while(!q.empty())
+	    {
+	        res.push_back(q.front()) ;					// insert front node into res
+	        int a = q.front() ;
+	        q.pop() ;
+	        
+	        for(auto i:adj[a])
+	        {
+	            indeg[i]-- ;							// decr node indeg by 1
+	            if(indeg[i] == 0)							// if indeg=0 then push into queue
+	                q.push(i) ;
+	        }
+	    }
+	    
+	    return res ;
+	}
+};
