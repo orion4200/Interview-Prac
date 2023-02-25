@@ -38,3 +38,51 @@ class Solution {
        return false ;
     }
 };
+
+
+////////////////////////////////////////////////////////////////////// using BFS(Kahn's algo)////////////////////////////////////////////////////////////////////////
+
+we apply topological sort to the graph. we know its only applicable to directed ACYCLIC graph. so if size of res (after topo sort) is less than V then it has cycle.
+
+class Solution {
+  public:
+    
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        vector<int> indeg(V, 0) ;
+        queue<int> q ;
+        
+        for(int i=0; i<V; i++)
+        {
+            for(int j:adj[i])
+                indeg[j]++ ;
+        }
+        
+        for(int i=0; i<V; i++)
+        {
+            if(indeg[i] == 0)
+                q.push(i) ;
+        }
+        
+        vector<int> res ;
+        while(!q.empty())
+        {
+            int a = q.front() ;
+            q.pop() ;
+            res.push_back(a) ;
+            
+            for(int i:adj[a])
+            {
+                indeg[i]-- ;
+                if(indeg[i] == 0)
+                    q.push(i) ;
+            }
+        }
+        
+        if(res.size() < V)                                            // if size of topo ordering is less than V, then it has cycle
+            return true ;
+            
+        return false ;                                                    //otherwise it isnt cyclic
+    }
+       
+};
