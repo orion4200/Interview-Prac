@@ -1,0 +1,56 @@
+To return if all courses can be taken or not.
+we can construct a grpah from prerequisites and then find its topo sort. if size of topo sort < numCourses, it means all courses cannot be taken. 
+
+
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        int n = numCourses ;
+
+        vector<int> adj[n] ;                      // adjacency matrix
+        vector<int> indeg(n, 0) ;                 // indegree list
+        queue<int> q ;
+        vector<int> res ;                         // topo sort
+
+        for(auto i:prerequisites)
+        {
+            adj[i[1]].push_back(i[0]) ;                     // [a,b] in prerequisite means b should be taken first, so they are connected like b->a in graph
+        }
+
+        for(int i=0; i<n; i++)
+        {
+            for(int it:adj[i])
+                indeg[it]++ ;                                 // find indgree of all nodes
+        }
+
+        for(int i=0; i<n; i++)                                // continue same logic as topo sort
+        {
+            if(indeg[i] == 0)
+                q.push(i) ;
+        }
+        
+        if(q.size() == 0)
+            return false ;
+
+        while(!q.empty())
+        {
+            int node = q.front() ;
+            q.pop() ;
+
+            res.push_back(node) ;
+
+            for(int it:adj[node])
+            {
+                indeg[it]-- ;
+                if(indeg[it] == 0)
+                    q.push(it) ;
+            }
+        }
+
+        if(res.size() != n)
+            return false ;
+
+        return true ;
+        
+    }
+};
