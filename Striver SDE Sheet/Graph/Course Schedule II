@@ -1,0 +1,53 @@
+To print the order in which courses will be taken. we simply print the topo sort of the graph using bfs. Logic same as course schedule I
+
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        int n = numCourses ;
+
+        vector<int> adj[n] ;
+        vector<int> indeg(n, 0) ;
+        queue<int> q ;
+        vector<int> res ;
+
+        for(auto i:prerequisites)
+        {
+            adj[i[1]].push_back(i[0]) ;
+        }
+
+        for(int i=0; i<n; i++)
+        {
+            for(int it:adj[i])
+                indeg[it]++ ;
+        }
+
+        for(int i=0; i<n; i++)
+        {
+            if(indeg[i] == 0)
+                q.push(i) ;
+        }
+        
+        if(q.size() == 0)
+            return {} ;
+
+        while(!q.empty())
+        {
+            int node = q.front() ;
+            q.pop() ;
+
+            res.push_back(node) ;
+
+            for(int it:adj[node])
+            {
+                indeg[it]-- ;
+                if(indeg[it] == 0)
+                    q.push(it) ;
+            }
+        }
+
+        if(res.size() == n)
+            return res ;
+
+        return {} ;
+    }
+};
