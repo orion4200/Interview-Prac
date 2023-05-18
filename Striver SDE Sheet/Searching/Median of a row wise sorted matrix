@@ -1,0 +1,58 @@
+class Solution{   
+public:
+    int smallerThan(vector<int> row, int mid)           //to find index of smallest number greater than mid 
+    {
+        int l = 0, h = row.size()-1 ;
+        
+        while(l<=h)
+        {
+            int m = (l+h)/2 ;
+            
+            if(row[m] <= mid)                   // if number less than equal to mid, our req number is at index greater than m
+                l = m+1 ;                           // so shift low
+            else 
+                h = m-1 ;                   // else shift high
+        }
+        
+        return l ;
+        
+    }
+    int median(vector<vector<int>> &matrix, int R, int C){
+        // vector<int> v ;                                            // naive approach - simply flatten the matrix into vector
+        
+        // for(auto i:matrix)
+        // {
+        //     for(auto j:i)
+        //     {
+        //         v.push_back(j) ;
+        //     }
+        // }
+        // sort(v.begin(), v.end()) ;                         // sort the vector
+        
+        // int t = (R*C+1)/2 ;                        // find mid index 
+        
+        // return v[t-1] ;\                       // return the number at mid index (for 0 based indexing, add -1)
+        
+-----------------------------------------------------------------------------------------------------------------------
+        int low = 1, high = INT_MAX ;             // binary search method - initiate low and high
+        
+        while(low <= high)
+        {
+            int mid = (low+high)/2 ;
+            int cnt = 0 ;                             // to count no. of numbers less than mid in each row
+            
+            for(int i=0; i<R; i++)                            // iterate through each row
+            {
+                cnt += smallerThan(matrix[i], mid) ;          //count no. of numbers less than mid in each row
+            }
+            
+            if(cnt <= (R*C)/2)              // if that count less tha equal to half of total no. of numbers, our ans is in space greater than mid, so shift low
+                low = mid+1 ;
+            else
+                high = mid-1 ;                        // else shift high
+        }
+        
+        return low ;                      // ans will be low
+        
+    }
+};
