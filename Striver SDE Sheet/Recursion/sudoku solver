@@ -38,10 +38,10 @@ public:
                 if(solve(b, i, j+1))                            // solve for next cell, if valid entry exists then return true
                     return true ;
                 else
-                    b[i][j] = '.' ;                                     // else erase current entry as one of the future cells has no valid entries
+                    b[i][j] = '.' ;                                     // else erase current entry as one of the future cells has no valid entries, so backtrack
             }
         }
-        return false ;                                          // backtrack
+        return false ;                                          
     }
     void solveSudoku(vector<vector<char>>& board) {
         solve(board, 0, 0) ;
