@@ -1,0 +1,32 @@
+class Solution
+{
+    public:
+    //Function to find the maximum number of meetings that can
+    //be performed in a meeting room.
+    int maxMeetings(int start[], int end[], int n)
+    {
+        int cnt=1 ;                                                                                   // we assume that 1st meeting happens
+        
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;     // declare priority queue
+        
+        for(int i=0; i<n; i++)                                                            // push pair wise with endtime being the first element and starttime second
+        {
+            pq.push(make_pair(end[i], start[i])) ;
+        }
+        
+        int endtime = pq.top().first ;                                                    // we will get an array with sorted endtime from low to high, so we take the endtime of first i.e. the meeting which will get over the earliest
+        
+        while(!pq.empty())
+        {
+            auto p = pq.top() ;
+            pq.pop() ;
+            
+            if(p.second > endtime)                                                // now compare the endtime of current meeting with start time of next meeting, st_time should be greater
+            {
+                cnt++ ;                                                 // incr cnt
+                endtime = p.first ;                                     // update endtime to the endtime of current meeting only if current meeting happens
+            }
+        }
+        return cnt ;
+    }
+};
