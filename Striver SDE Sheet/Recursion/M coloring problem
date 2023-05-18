@@ -1,0 +1,43 @@
+
+logic -> we color each node with all possible colors. we color node with one color and then start coloring its adj nodes with different and we keep going till all nodes
+        are finished or no combo is possible. while coloring we keep in mind that adj nodes dont get same color. 
+
+
+class Solution{
+public:
+
+    bool isValidColor(bool graph[101][101], vector<int>& colors, int node, int col, int N)
+    {
+        for(int k=0; k<N; k++)                                                        // check all adjacent nodes
+        {
+            if(k != node && graph[node][k] == 1 && colors[k] == col)                  // if the bode we are checking is not the current node, if the node is an adjacent node and if the adj node's color is same as the current node, then false
+                return false ;
+        }
+        return true ;                                               // color is safe
+    }
+    
+    bool solve(bool graph[101][101], vector<int>& colors, int node, int N, int m)
+    {
+        if(node == N)                                           // if we have checked all nodes, stop
+            return true ;
+            
+        for(int i=1; i<=m; i++)                             // each node is checked for all colors
+        {
+            if(isValidColor(graph, colors, node, i, N))                 // if color i is valid
+            {
+                colors[node] = i ;                                      // we color node with color i
+                if(solve(graph, colors, node+1, N, m))                        // if the next node has a valid color then return true
+                    return true ;
+                
+                colors[node] = 0 ;                                  // else backtrac and remove color since with this combo we wont get ans
+            }
+        }
+        return false ;
+    }
+    
+    bool graphColoring(bool graph[101][101], int m, int n) {
+        vector<int> color(n, 0) ;                                   // array to store color of each node
+        
+        return solve(graph, color, 0, n, m) ;                     // (graph, color vector, current node, total nodes, max colors)
+    }
+};
