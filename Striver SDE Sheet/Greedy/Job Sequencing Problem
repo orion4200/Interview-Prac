@@ -1,0 +1,50 @@
+logic -> sort jobs profit wise in descending order and perform job with highest profit first. Perform a job on its deadline day. If, on its deadline day, another
+          job with higher profit has been performed then find a day before the deadline to perform the job. If day not found, leave the job. 
+
+class Solution 
+{
+    public:
+    //Function to find the maximum profit and the number of jobs done.
+    
+     static bool comp( Job j1, Job j2)                                                  // for sorting jobs profit wise in descending order
+    {
+        if(j1.profit > j2.profit)
+            return true ;
+        
+        return false ;
+    }
+    static bool comp2( Job j1, Job j2)                                      // for sorting jobs with deadline in descending order 
+    {
+        if(j1.dead > j2.dead)
+            return true ;
+        
+        return false ;
+    }
+    vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        sort(arr, arr+n, comp2) ;                                         // sort jobs deadline wise to get max deadline
+        int N = arr[0].dead ;                                         // max deadline is deadline of the first el ( or first job)
+        vector<int> days(N, -1) ;                                         // make vector days with size of max deadline as this will be the available days for doing the jobs
+        sort(arr, arr+n, comp) ;                                          // now sort according to profit in descending
+        
+        vector<int> ans ; int max_profit=0, jobs=0 ;
+        
+        for(int i=0; i<n; i++)
+        {
+            int j = arr[i].dead-1 ;                                     // we perform a job on its deadline day, for 0 based indexing we do -1
+            
+            while(j >=0 && days[j] != -1)                                     // if days[j] != -1, then we must be performing some other job on that day with same deadline
+                    j-- ;                                     // so we find a blank day before the deadline 
+            
+            if(j >= 0)                                                    // if blank day before the deadline is found, we perform the job on that day
+            {
+                days[j] = arr[i].profit ;                                   // perform job
+                max_profit += arr[i].profit ;                         // update max_profit and jobs
+                jobs++ ;
+            }
+        }
+        
+        ans.push_back(jobs); ans.push_back(max_profit) ;
+        
+        return ans ;
+    }
