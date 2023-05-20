@@ -1,0 +1,40 @@
+logic 1 -> xor all numbers, the result is ans since xor of two equal number is 0 and xor of any number with 0 is number itself
+logic 2 -> for left side of the req number - 1st instance of any pair lies on even index and 2nd instance on odd index
+           for right side of the req number - 1st instance of any pair lies on odd index and 2nd instance on even index
+           
+           if number is even, number^1 gives next odd number and if number is odd, number^1 gives prev even number (5^1 = 4, 4^1 = 5)
+           
+           so if nums[mid] == nums[mid^1] then it means we are on the left side of the req number so low is updated
+           else we are on the right side of the req number and high is updated 
+
+
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        // int n = nums.size(), x = nums[0] ;        
+
+        // if(n == 1)
+        //     return nums[0] ;
+        
+        // for(int i=1; i<n; i++)
+        //     x = x^nums[i] ;
+
+        // return x ;
+        int n = nums.size() ;
+        int low = 0, high = n-2 ;               // high is taken as the 2nd last numeber !!! , if the ans is the last number then to make low point to the ans, since we are returning low only
+        int mid ;
+
+        while(low <= high)
+        {
+            mid = (low+high)/2 ;
+
+            if(nums[mid] == nums[mid^1])
+                low  = mid+1 ;
+            else
+                high = mid-1 ;
+
+        }
+        return nums[low] ;
+
+    }
+};
