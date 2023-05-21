@@ -1,0 +1,37 @@
+logic-> apply binsearch
+        check if left of mid is sorted or not (nums[low] <= nums[mid]),   if yes, then check if target lies on left of mid or not,  update low and high accordingly
+        else right side of mid has to be sorted (since left side is not sorted means pivot lies on left),  check if target lies on right of mid or not,  update low and high accordingly
+
+class Solution {
+public:
+    
+    int search(vector<int>& nums, int target) {
+        int n = nums.size() ;
+        
+        int low = 0, high = n-1, mid ;
+
+        while(low <= high)
+        {
+            mid = (high+low)/2 ;
+
+            if(nums[mid] == target)
+                return mid ;
+
+            if(nums[low] <= nums[mid])
+            {
+                if(target >= nums[low] && target <= nums[mid])
+                    high = mid-1 ;
+                else
+                    low = mid+1 ;
+            }
+            else
+            {
+                if(target >= nums[mid] && target <= nums[high])
+                    low = mid+1 ;
+                else
+                    high = mid-1 ;
+            }
+        }
+        return -1 ;
+    }
+};
