@@ -14,22 +14,22 @@ public:
         {
             mid = (high+low)/2 ;
 
-            if(nums[mid] == target)
+            if(nums[mid] == target)                                                             // if search found
                 return mid ;
 
-            if(nums[low] <= nums[mid])
+            if(nums[low] <= nums[mid])                                                        // left side sorted or not
             {
-                if(target >= nums[low] && target <= nums[mid])
+                if(target >= nums[low] && target <= nums[mid])                                  // if t lies on the left side, update high
                     high = mid-1 ;
                 else
-                    low = mid+1 ;
+                    low = mid+1 ;                                                               // else update low
             }
             else
             {
-                if(target >= nums[mid] && target <= nums[high])
+                if(target >= nums[mid] && target <= nums[high])                                 // if t lies on the right side, update low
                     low = mid+1 ;
                 else
-                    high = mid-1 ;
+                    high = mid-1 ;                                                              // else update high
             }
         }
         return -1 ;
