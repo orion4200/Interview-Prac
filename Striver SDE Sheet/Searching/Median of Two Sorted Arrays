@@ -1,0 +1,32 @@
+logic 1 -> merge the sorted arrays and find the median of the merged sorted array
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums2.size(), m = nums1.size() ;
+        vector<int> num(n+m, 0) ;
+        int i=0, j=0, k=0 ;
+
+        while(i<m && j<n)
+        {
+            if(nums1[i] <= nums2[j])
+                num[k++] = nums1[i++] ;
+            else
+                num[k++] = nums2[j++] ;
+        }
+        while(i<m)
+            num[k++] = nums1[i++] ;
+        
+        while(j<n)
+            num[k++] = nums2[j++] ;
+
+        if((n+m)%2 != 0)
+            return num[(n+m)/2] ;            
+        
+        return (double)(num[(n+m)/2] + num[(n+m)/2 - 1])/2 ;            // explicitly convert either the numerator or denomenator to double to get decimal value
+        
+    }
+};
+
+
+logic 2 -> nb
