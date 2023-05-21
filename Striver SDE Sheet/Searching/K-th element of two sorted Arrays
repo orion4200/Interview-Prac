@@ -1,0 +1,42 @@
+logic 1 -> naive appr
+            use merging sorted array technique, keep a counter h for every el selected
+            when h is equal to k, return the hth element
+
+class Solution{
+    public:
+    int kthElement(int arr1[], int arr2[], int n, int m, int k)
+    {
+        int i=0, j=0, h=0 ;
+        
+        while(i<n && j<m)
+        {
+            if(arr1[i] <= arr2[j])
+            {
+                i++ ; h++ ;
+                if(h == k)
+                    return arr1[--i] ;            // for 0 based indexing, if i=0, h=0, and then i=1 and h=1, then it means we want el at 0th index (i.e. i=0) 
+            }
+            else
+            {
+                j++ ; h++ ;
+                if(h == k)
+                    return arr2[--j] ;
+            }
+        }
+        
+        while(i<n)
+        {
+            i++; h++ ;
+            if(h == k)
+                return arr1[--i] ;
+        }
+        while(j<m)
+        {
+            j++; h++ ;
+            if(h == k)
+                return arr2[--j] ;
+        }
+        
+        return 0 ;
+    }
+};
