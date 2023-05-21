@@ -1,3 +1,5 @@
+naive appr - linear search
+
 logic-> apply binsearch
         check if left of mid is sorted or not (nums[low] <= nums[mid]),   if yes, then check if target lies on left of mid or not,  update low and high accordingly
         else right side of mid has to be sorted (since left side is not sorted means pivot lies on left),  check if target lies on right of mid or not,  update low and high accordingly
