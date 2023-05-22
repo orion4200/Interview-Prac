@@ -1,0 +1,35 @@
+logic -> stack stores pair of int type values. the first el is the val pushed and the second el will store the minimum upto that val. 
+
+
+class MinStack {
+public:
+    stack<pair<int, int>> st ; int mn = INT_MAX ;
+    MinStack() {
+        
+    }
+    
+    void push(int val) {
+        if(st.empty())                                      // id stack is empty, mn = min of val to be pushed and INT_MAX
+        {
+            mn = min(INT_MAX, val) ;
+            st.push(make_pair(val, mn)) ;
+        }
+        else                                          // if stack not empty, mn will be min of val to be pushed and mn upto the top el of stack
+        {
+            mn = min(val, st.top().second) ;
+            st.push(make_pair(val, mn)) ;
+        }
+    }
+    
+    void pop() {
+        st.pop() ;
+    }
+    
+    int top() {
+        return st.top().first ;
+    }
+    
+    int getMin() {
+        return st.top().second ;
+    }
+};
