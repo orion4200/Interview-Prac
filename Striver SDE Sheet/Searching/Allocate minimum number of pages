@@ -1,0 +1,58 @@
+logic ->
+
+class Solution 
+{
+    public:
+    bool allocation(int A[], int mid, int n, int m)
+    {
+        int students=1, pages=0 ;               // min 1 student
+        
+        if(n < m) return false ;                      // if no. of books less than no. of students, then allocation not possible
+        
+        for(int i=0; i<n; i++)
+        {
+            if(mid < A[i])                            // if no. of pages at any index is more than the partition, then allocation not possible
+                return false ;
+            
+            if(pages + A[i] <= mid)                     //if pages allocated to xth student is less than the mid(or barrier), keep allocating more pages
+                pages += A[i] ;
+            else
+            {
+                students++ ; pages = A[i] ;               // if pages allocated to xth student becomes more than the mid(or barrier), then allocate to next student and make pages equal to pages allocated to him i.e. A[i]
+            }
+        }
+        
+        if(students > m)                                // if allocation is done to more than m students, allocation for m students isnt possible
+            return false ;
+        return true ;
+    }
+    //Function to find minimum number of pages.
+    int findPages(int A[], int N, int M) 
+    {
+        int mn = INT_MAX, sum=0 ;             //mn is min in the array and sum is sum of all el
+        for(int i=0; i<N; i++)
+        {
+            if(A[i] < mn)
+                mn = A[i] ;
+            sum += A[i] ;
+        }
+        
+        int low = mn, high = sum, mid, res=-1 ;             // low is the min no. of pages that can be allocated to one student, i.e. the min el in array
+                                                           // high is the max no. of pages that can be allocated to one student, i.e. all the pages hence sum of all el
+        while(low <= high)
+        {
+            mid = (high + low)/2 ;
+            
+            if(allocation(A, mid, N, M))                // if allocation is possible
+            {
+                res = mid ;                       // this can be one of the answers
+                high = mid - 1 ;                  // we neglect every value on right of mid as we need the max allocated pages to be minimum, and we know all values to the right of mid will give a valid ans
+            }
+            else
+                low = mid + 1 ;                 // we neglect the left side of mid, as, if the mid is not enough for allocation then any value less than mid also cannot be
+        }
+        
+        return res ;
+        
+    }
+};
