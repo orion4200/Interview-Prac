@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool isPossible(vector<int>& stalls, int dist, int k, int n)
+    {
+        int prev_cow = stalls[0] ;                        // lets keep 1st cow at first stall i.e. i=0,....prev_cow denotes stall dist of the previous cow kept
+        k-- ;                                       // 1st cow has been kept, so k--
+        
+        for(int i=0; i<n; i++)
+        {
+            if(stalls[i] - prev_cow >= dist)                // if dist between stall with prev cow kept and the current stall is more or equal than the min dist (i.e. mid)
+            {
+                k-- ;                                   // then keep cow at current stall
+                prev_cow = stalls[i] ;                  // update prev_cow
+            }
+            if(k == 0)                                        // if all cows kept, return true
+                return true ;
+        }
+        
+        return false ;                            // return false as all cows couldnt be placed
+    }
+
+    int solve(int n, int k, vector<int> &stalls) {
+        sort(stalls.begin(), stalls.end()) ;                        // sort the array 
+        
+        int low = 1, high = stalls[n-1] - stalls[0];                 // min dist between 2 cows can be 1 (2 stalls will be atleast 1 unit apart) and max dist can be (if 1st cow is placed at 0 and 2nd at n-1) arr[0]-arr[n-1]
+        int mid, res=1 ;
+        
+        while(low <= high)
+        {
+            mid = (low + high)/2 ;
+            
+            if(isPossible(stalls, mid, k, n))                       // if keeping k cows with mid being the min dist between them is possible or not 
+            {
+                res = mid ;                                         // this can be one of the ans, (we need largest)
+                low = mid+1 ;                                     // we need largest so we discard values less than mid
+            }
+            else
+                high = mid-1 ;                              // if with mid being the min dist between the k cows is not possible then any value(dist) higher than mid will also be not possible
+        }
+        
+        return res ;
+        
+    }
+};
