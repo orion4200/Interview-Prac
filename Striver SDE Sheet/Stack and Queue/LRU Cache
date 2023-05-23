@@ -1,0 +1,49 @@
+logic -> use dll, front of dll will have most recently used key and end of dll will have least recently used key
+      -> when adding new key, add it in front of dll to make it most recently used
+      ->same if the key is used (get is called for the key)
+      -> when updating val of key (if key already exists) make key most recently used by deleting it from dll and adding it to the front of dll
+
+class LRUCache {
+public:
+    int cap ; 
+    map<int, list<pair<int ,int>>::iterator> mp ;                 // map[key, its address in dll]
+    list<pair<int, int>> ls ;                                     // doubly linked list (dll), dll[key, value]
+    
+    LRUCache(int capacity) {
+        cap = capacity ;
+    }
+    
+    int get(int key) {
+        if(mp.find(key) != mp.end())                                    // if key exists
+        {
+            auto it = mp[key] ; int val = it->second ;                      // store its value
+
+            ls.erase(mp[key]) ;                                       // erase it from dll
+            ls.push_front(make_pair(key, val)) ;                        // push it in dll to make it first node (i.e. most recently used)
+            mp[key] = ls.begin() ;                                      // update its address in map
+
+            return val ;
+        }
+
+        return -1 ;                           // if it doesnt exist return -1
+    }
+    
+    void put(int key, int value) {
+        if(mp.find(key) == mp.end())                                      // if key doesnt exist
+        {
+            if(mp.size() >= cap)                                          // if capacity is reached
+            {
+                mp.erase(ls.back().first) ;                                 // erase least recently used key from map
+                ls.pop_back() ;                                         // erase last node of dll (i.e. least recently used key)
+            }
+            ls.push_front(make_pair(key, value)) ;                      // now add key in front (to make it most recently used)
+            mp[key] = ls.begin() ;                                  // add it in map with its address 
+        }
+        else                                                                // if it already exists in list, then update its val and make it most recently used
+        {
+            ls.erase(mp[key]) ;                                          // erase it from dll
+            ls.push_front(make_pair(key, value)) ;                        // push it in dll to make it first node (i.e. most recently used)
+            mp[key] = ls.begin() ;                                      // update its address in map
+        }
+    }
+};
