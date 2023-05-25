@@ -32,3 +32,35 @@ public:
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 stack soln -: 
+logic -> stack stores index in increasing order towards the bottom
+      -> after we pop stack top, its width will be its index if stack is empty since if stack empty the it means no smaller el than arr[stack top] exists so ls is 0
+      -> if stack not empty, then it means ls exists and ls is equal to index of stack top (that is the left small for the popped el), then width will be rs-ls+1 i.e. i-
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& arr) {
+
+        stack<int> st ;                                                                 // stack stores index in increasing order towards the bottom
+        int n = arr.size() ;
+
+        int maxA = INT_MIN ;
+
+        for(int i=0; i<=n; i++)
+        {
+            int wid ;                                                                           // width
+            while(!st.empty() && (i == n || arr[i] < arr[st.top()]))                                // if stack not empty or i is at n or curr el is less than the el ai index at stack top
+            {
+                int b = st.top() ; st.pop() ;                                           // store top in b, b represents index
+                
+                wid = st.empty() ? i : i-st.top()-1 ;                               // for arr[b], width of largest rect will be its index if stack is empty and i-(index of its ls)-1 if stack is not empty
+
+                int a = wid * arr[b] ;                                      // calculate area for index b
+                maxA = max(maxA, a) ;                                           / update maxA
+            }
+
+            st.push(i) ;                                                                        // push curr index
+        }
+
+        return maxA ;
+    }
+};
