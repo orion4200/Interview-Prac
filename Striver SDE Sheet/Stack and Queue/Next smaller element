@@ -1,0 +1,22 @@
+class Solution{
+    
+    public:
+    vector<int> help_classmate(vector<int> arr, int n) 
+    { 
+        stack<pair<int, int>> st ;                                // stack to store el and its index
+        vector<int> res(n, -1) ;
+        
+        for(int i=0; i<n; i++)
+        {
+            while(!st.empty() && arr[i] < st.top().first)                 // if stack not empty and top of stack greater than the curr el in array
+            {
+                res[st.top().second] = arr[i] ;                       // then curr el in array is the next smaller el for the top of stack el
+                st.pop() ;                                    // pop from stack
+            }
+            
+            st.push(make_pair(arr[i], i)) ;                   // if stack empty or stack top is less than curr el then simply push into stack 
+        }
+        
+        return res ;
+    } 
+};
