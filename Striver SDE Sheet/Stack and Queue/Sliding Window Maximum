@@ -1,24 +1,28 @@
 naive appr -> search for max in each window by nested loop method
 
-logic ->
+logic -> we maintain a decreasing order in the dll with front being the largest
+      -> we insert the indexes in the dll and not the el
+      -> if nums[i] is less than dll.back() then simply push as decr order will be maintained
+      -> otherwise keep poping from back till we get a larger el, i.e. nums[i] < dll.back()
+      -> whenever i moves, window moves forward (from i>=k onwards), so we keep checking if the front index is > i-k or not, if not then pop it as it is out of the window
 
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        list<int> ls ;
+        list<int> ls ;                                                          // doubly ll
         vector<int> res ;
 
         for(int i=0; i<nums.size(); i++)
         {
-            if(!ls.empty() && ls.front() <= i-k) ls.pop_front() ;
+            if(!ls.empty() && ls.front() <= i-k) ls.pop_front() ;                       // if list.front() has an index which is out of the curent window, pop it
 
-            while(ls.size() != 0 && nums[i] > nums[ls.back()])
+            while(ls.size() != 0 && nums[i] > nums[ls.back()])              // if nums[i] is not less than dll.back(), keep poping from back till we get a larger el, i.e. nums[i] < dll.back()
                     ls.pop_back() ;
                 
-            ls.push_back(i) ;
+            ls.push_back(i) ;                                           // push curr index no matter what
             
-            if(i >= k-1)
-                res.push_back(nums[ls.front()]) ;
+            if(i >= k-1)    
+                res.push_back(nums[ls.front()]) ;                           // push in res the largest of window i.e. el at index dll.front(), push only when i >= k-1 i.e. initially i needs to first reach k and then we start pushing as i moves 
         }
         return res ;
     }
