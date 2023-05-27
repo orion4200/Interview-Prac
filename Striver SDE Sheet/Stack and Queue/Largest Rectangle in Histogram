@@ -55,7 +55,7 @@ public:
                 wid = st.empty() ? i : i-st.top()-1 ;                               // for arr[b], width of largest rect will be its index if stack is empty and i-(index of its ls)-1 if stack is not empty
 
                 int a = wid * arr[b] ;                                      // calculate area for index b
-                maxA = max(maxA, a) ;                                           / update maxA
+                maxA = max(maxA, a) ;                                           // update maxA
             }
 
             st.push(i) ;                                                                        // push curr index
