@@ -1,0 +1,25 @@
+naive appr -> search for max in each window by nested loop method
+
+logic ->
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        list<int> ls ;
+        vector<int> res ;
+
+        for(int i=0; i<nums.size(); i++)
+        {
+            if(!ls.empty() && ls.front() <= i-k) ls.pop_front() ;
+
+            while(ls.size() != 0 && nums[i] > nums[ls.back()])
+                    ls.pop_back() ;
+                
+            ls.push_back(i) ;
+            
+            if(i >= k-1)
+                res.push_back(nums[ls.front()]) ;
+        }
+        return res ;
+    }
+};
