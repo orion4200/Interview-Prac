@@ -1,0 +1,1 @@
+naive appr -> using recursion find all permutations and then sort them, k-1th one will be the ans.....O(n! x n)...n! for making all permutations and n for storing it in ds
