@@ -1,1 +1,34 @@
 naive appr -> using recursion find all permutations and then sort them, k-1th one will be the ans.....O(n! x n)...n! for making all permutations and n for storing it in ds
+logic -> nb
+
+
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        vector<int> nums ;
+        int fact = 1 ;
+
+        for(int i=1; i<n; i++)
+        {
+            fact = fact*i ;                               // find n-1 !
+            nums.push_back(i) ;                         // create array with number from 1 to n
+        }   
+        nums.push_back(n) ;                         // since prev loop ran only till n-1
+        string res="" ;
+        k-- ;                                       // reduce k by 1 for 0 based indexing
+
+        while(1)
+        {
+            res += to_string(nums[k/fact]) ;                            
+            nums.erase(nums.begin() + k/fact) ;
+
+            if(nums.size() == 0)
+                break ;
+
+            k = k%fact ;
+            fact = fact / nums.size() ;
+        }
+
+        return res ;
+    }
+};
