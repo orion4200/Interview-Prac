@@ -4,7 +4,7 @@ logic -> for successor-: (inorder succ of a node in bst is the immediate next gr
       
       -> for predecessor-: (inorder pred of a node in bst is the immediate next smaller node in the bst, if node itself smallest then pred is NULL)
       -> if root val >= key then move left
-      -> if root val < key - could be a possible pred hence update suc and move to right(we want node value between this root val and the key)
+      -> if root val < key - could be a possible pred hence update pred and move to right(we want node value between this root val and the key)
 
 
 void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
