@@ -1,0 +1,70 @@
+class LFUCache {
+public:
+    int cap ;
+    map<int, list<pair<int, int>>::iterator> mp ;                       //mp[key, address]
+    map<int, list<pair<int, int>>> f ;                                  // f[frequency, list(dll)]
+    map<int, int> kf ;                                                    // kf[key, freq]
+    int minfreq = 0 ;                                       // minimum freq among all lists
+
+    LFUCache(int capacity) {
+        cap = capacity ;
+    }
+    
+    int get(int key) {
+        if(mp.find(key) != mp.end())                                                              // if key exists
+        {
+            auto it = mp[key] ; int val = it->second, freq = kf[key] ;                          //it stores its addr, val its value and freq its frequency
+
+            f[freq].erase(it) ;                                                         // now we erase the key from the list it is currently in
+
+            if(f[freq].size() == 0)                                                         // after erasing, if size of the list we erased from becomes 0 then remove the frequency-list pair from map f
+                f.erase(freq) ;
+
+            freq++ ;                                                                // incr freq of the key (since we are getting it)
+            f[freq].push_front(make_pair(key, val)) ;                                   // now push it in new list(list corresponding to the incremented freq in map f)from the front
+            mp[key] = f[freq].begin() ;                                                 // update addr of key
+            kf[key] = freq ;                                                            // update frequency of key
+
+            minfreq = f.begin()->first ;                                              // update minfreq, minfreq is always the frequency of the first pair in map f (since map stores in sorted asc order)
+
+            return val ;
+        }
+        return -1 ;
+    }
+    
+    void put(int key, int value) {
+        if(mp.find(key) == mp.end())                                                // if key not present
+        {
+            if(mp.size() >= cap)                                                  // if cap reached or exceeded
+            {
+                mp.erase(f[minfreq].back().first) ;                             // remove least frequent(minfreq) and least recently used(from back of the list) key from map mp
+                f[minfreq].pop_back() ;                                           // remove el from back of the list corresponding to minfreq in map f
+
+                if(f[minfreq].size() == 0)                                        // if erasing frfom list causes the list to become empty
+                {
+                    f.erase(minfreq) ;                                              // erase the frequency list pair from map f
+                    minfreq = f.begin()->first ;                                      // update minfreq to first frequency in map f
+                }
+            }
+            f[1].push_front(make_pair(key, value)) ;                              // add key from front of the list corresponding to frequency 1 in map f
+            mp[key] = f[1].begin() ;                                            // update addr of key
+            minfreq = 1 ;                                                       // update minfreq (since we added to freq 1, this will be the minimum freq)
+            kf[key] = 1 ;                                                         // update frequency of key
+        }
+        else                                                                     // if key existed
+        {
+            auto it = mp[key] ; int freq = kf[key] ;                                // just follow get() fn - erase key from its current list and add to list corresponding to next freq and update its freq and addr and update minfreq
+            f[freq].erase(it) ;
+
+            if(f[freq].size() == 0)
+                f.erase(freq) ;
+
+            freq++ ;
+            f[freq].push_front(make_pair(key, value)) ;
+            mp[key] = f[freq].begin() ;
+            kf[key] = freq ;
+
+            minfreq = f.begin()->first ;
+        }
+    }
+};
