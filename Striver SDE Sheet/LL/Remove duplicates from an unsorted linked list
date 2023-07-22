@@ -1,0 +1,28 @@
+class Solution
+{
+    public:
+    //Function to remove duplicates from unsorted linked list.
+    Node * removeDuplicates( Node *head) 
+    {
+        unordered_map<int, int>mp ;
+        Node* p = head, *q = head->next ;        //p is trailing q
+        mp[p->data] = 1 ;                        // add p to map
+        
+        while(q != NULL)
+        {
+            if(mp[q->data])                        // (only p is added to the map) if q also exists in map, it means its a duplicate 
+            {
+                p->next = q->next ;                // delete node q
+                q = q->next ;
+            }
+            else                                    // else add node q to map and move p and q
+            {
+                mp[q->data]++ ;
+                p = q ;
+                q = q->next ;
+            }
+        }
+        
+        return head ;
+    }
+};
