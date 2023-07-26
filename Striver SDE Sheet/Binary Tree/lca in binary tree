@@ -8,7 +8,7 @@ public:
         TreeNode *r = lowestCommonAncestor(root->right, p, q);  // traverse right 
         
         if(!l) return r ;                                        // if value doesnt match with p or q return NULL
-        else if(!r) return l ;
+        else if(!r) return l ;                                   // if amongst l and r, one is NULL and other isnt, we return the not NULL one
         else return root ;                                      // if value matches to either p or q then we return the node
     }
 };
