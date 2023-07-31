@@ -1,0 +1,35 @@
+bool solve(Node* root, int node, vector<int>& v)
+{
+    if(root == NULL)
+        return 0 ;
+        
+    v.push_back(root->data) ;
+        
+    if(root->data == node)
+        return 1 ;
+        
+    bool l=0, r=0 ;
+    l = solve(root->left, node, v) ;
+    
+    if(!l)
+        r = solve(root->right, node, v) ;
+    
+    if(l || r)
+        return 1 ;
+    
+    v.pop_back() ;
+    return 0 ;
+    
+}
+int kthAncestor(Node *root, int k, int node)
+{
+    vector<int> path ;
+    
+    solve(root, node, path);
+    int n = path.size();
+    
+    if(k >= n)
+        return -1 ;
+    
+    return path[n-k-1] ;
+}
