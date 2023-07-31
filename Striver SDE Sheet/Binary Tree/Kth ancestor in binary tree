@@ -1,3 +1,9 @@
+logic -> create root to node path -> go left of root...if node found then return 1...if NULL reached return 0....push node data to vector.....after returning from 
+            left go right (if left return treu then no need to go right)....if anyone of left or right returned 1 then return 1....else pop from vector and return 0
+      -> return size-k th element of path vector
+      -> if k>n it means kth ancestor doesnt exist
+
+
 bool solve(Node* root, int node, vector<int>& v)
 {
     if(root == NULL)
