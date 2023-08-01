@@ -1,0 +1,30 @@
+logic -> modified DFS
+
+class Solution {
+public:
+    void solve(vector<vector<int>>& image, int color, int i, int j, int row, int col)
+    {
+        int prev_color = image[i][j] ;                                                    // store current pixel val
+        image[i][j] = color ;                                                              // change pixel val to color
+
+        if(j+1 < col && image[i][j+1] != color && image[i][j+1] == prev_color)            // check for 4 directionally located pixels if they had same pixel color, if yes and if index in range, change them to color
+            solve(image, color, i, j+1, row, col) ;
+        if(j-1 >=0 && image[i][j-1] != color && image[i][j-1] == prev_color)
+            solve(image, color, i, j-1, row, col) ;
+        if(i+1 < row && image[i+1][j] != color && image[i+1][j] == prev_color)
+            solve(image, color, i+1, j, row, col) ;
+        if(i-1 >= 0 && image[i-1][j] != color && image[i-1][j] == prev_color)
+            solve(image, color, i-1, j, row, col) ;
+
+        return ;
+        
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int m = image.size();
+        int n = image[0].size() ;
+        
+        solve(image, color, sr, sc, m, n) ;
+
+        return image ;
+    }
+};
