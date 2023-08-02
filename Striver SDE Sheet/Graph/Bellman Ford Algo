@@ -1,0 +1,37 @@
+- only works in directed graph
+- used for same purpose as djikstra, but it can be applied on graphs with negative weights also 
+
+- N-1 iterations reason -> since in a graph of n nodes, it will take n-1 edges to reach from first to last node in worst case, ex-:
+                          1->2->3->4->5....and edges are given in the order - (3,4), (2,3), (1,2), (0,1)
+
+- if graph has negative cycle -> Nth iteration will further reduce the values of the dist array
+
+
+
+class Solution {
+  public:
+    vector<int> bellman_ford(int V, vector<vector<int>>& edges, int S) {
+        vector<int> dist(V, 1e8) ;                                                    // dist vector, 1e8 was mentioned in the q otherwise take INT_MAX
+        
+        dist[S] = 0 ;                     // dist to source is 0
+        
+        for(int i=0; i<V; i++)                          // iterate for node-1 times
+        {
+            for(auto it:edges)                            // iterate through all edges
+            {
+                if(dist[it[0]] != 1e8 && dist[it[0]] + it[2] < dist[it[1]])         // if edge u is accessible and u + wt < v then update dist of source to v to u + wt
+                    dist[it[1]] = dist[it[0]] + it[2] ;
+            }   
+        }
+
+        // last iteration to check if negative cycle exists
+    
+        for(auto it:edges)
+        {
+            if(dist[it[0]] != 1e8 && dist[it[0]] + it[2] < dist[it[1]])              // if condition is true,  means distances have further reduced after V-1 iterations and hence negative cycle
+                return {-1} ;
+        }
+        
+        return dist ;
+    }
+};
