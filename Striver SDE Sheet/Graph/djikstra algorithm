@@ -1,3 +1,10 @@
+shortest path from a source node to all nodes of the undirected weighted graph.
+- not possible for graphs with negative weights
+
+- we can also use sets instead of pq 
+
+TC -> E logV  (E - edges, v - vertices/nodes)
+
 
 class Solution
 {
