@@ -1,0 +1,40 @@
+
+class Solution
+{
+	public:
+	//Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+        vector<int> dist(V, INT_MAX) ;
+        dist[S] = 0 ;
+        
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq ; // format -> (dist_from_S_to_node, node)
+        pq.push(make_pair(0, S)) ;                                                          // dist from S to S is 0
+        
+        while(!pq.empty())
+        {
+            auto n = pq.top() ; pq.pop() ;                              // pop top el
+            
+            int node = n.second; int dis = n.first ;                    //node and dis to that node from S
+            
+            for(auto it:adj[node])                                        // ewxplore the adjacent nodes of that node
+            {
+                int edgeweight = it[1] ;                            // weight of edge between the node the adjacent node
+                int adjnode = it[0] ;                              // the adjacent node
+                
+                int cur_dist = dis + edgeweight ;                        // total distance (edge weight) from S to the adjacent node
+                if(dist[adjnode] > cur_dist)                            // if that total dist is less than the dist recorded in dist vector then update it
+                {
+                    dist[adjnode] = cur_dist ;
+                    
+                    pq.push(make_pair(cur_dist,adjnode)) ;                          // push the adjacent node with the total dist from S to the adjacent ndoe
+                }
+            }
+        }
+        
+        return dist ;
+        
+        
+    }
+};
