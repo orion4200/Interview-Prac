@@ -5,6 +5,10 @@ shortest path from a source node to all nodes of the undirected weighted graph.
 
 TC -> E logV  (E - edges, v - vertices/nodes)
 
+intuition behind taking pq and not queue -> if we take queue, it is not gauranteed that the shortest path will be popped first and hence we unneccessarily explore 
+						the path and add the distance to dist vector even if it isnt the shortest. When the shortest path entry arrives the
+						dist vector value will be updated to store the shortest path. This whole thing can be avoided by using a pq
+
 
 class Solution
 {
