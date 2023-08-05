@@ -1,0 +1,44 @@
+logic -> djikstra algo
+but edges is vector of vector and not vector of vector of array
+
+
+class Solution {
+  public:
+     vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){                            // vector of vector not in sorted form
+        
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> q ;        // priority queue
+        q.push({0,0}) ;  // {dist, node}
+        
+        vector<int> dist (N, INT_MAX) ;                // distance vector
+        dist[0] = 0 ;
+        
+        while(!q.empty())
+        {
+            auto n = q.top(); q.pop();                              
+            
+            int node = n[1], edgeweight = n[0] ;                        // node and its dist from source
+            for(auto it:edges)                                          // explore its neighbours
+            {
+                if(it[0] == node)                                        // check edges for this node only
+                {
+                    int adjnode = it[1] ; int adjweight = it[2] ;
+                    int cur_dist = edgeweight + adjweight ;
+                    
+                    if(dist[adjnode] > cur_dist)
+                    {
+                        dist[adjnode] = cur_dist ;
+                        q.push({cur_dist, adjnode}) ;
+                    }
+                }
+            }
+        }
+        
+        for(int i=0; i<N; i++)                                          // if any dist is still INT_MAX then it means it is disconnected and hence update it to -1
+        {
+            if(dist[i] == INT_MAX)
+                dist[i] = -1 ;
+        }
+        
+        return dist ;
+    }
+};
