@@ -1,0 +1,20 @@
+class Solution{
+    public:
+    long long findMinDiff(vector<long long> a, long long n, long long m){
+    
+        sort(a.begin(), a.end()) ;                      // sort array
+        
+        int diff = INT_MAX ;
+        int i=0, j=m-1;                                 // maintain a window of size m 
+        while(j<n)
+        {
+            if(a[j] - a[i] < diff)                            // if diff of a[i] and a[i+m-] if less then diff, then update diff
+                diff = a[j]-a[i] ;
+                
+            i++; j++ ;                                // incr both i and j to maintain size m
+        }
+        
+        return diff ;
+    
+    }   
+};
